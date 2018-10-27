@@ -5,6 +5,13 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('I am snake. Python Snake.')
 
+#define colours
+black = (0, 0, 0)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+
 
 gamedead = False
 head_x = 50
@@ -35,8 +42,8 @@ while not gamedead:
 
     head_x += inc_x
     head_y += inc_y
-    pygame.draw.rect(screen, (255, 0, 0), [head_x, head_y, 15, 15])
-    pygame.display.flip()
+    pygame.draw.rect(screen, red, [head_x, head_y, 15, 15])
+    pygame.display.update()
 
     clock.tick(5)
 
