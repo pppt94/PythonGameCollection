@@ -2,8 +2,12 @@ import pygame
 
 pygame.init()
 
-screen = pygame.display.set_mode((800, 600))
+#define screen
+scr_width = 800
+scr_height = 600
+screen = pygame.display.set_mode((scr_width, scr_height))
 pygame.display.set_caption('I am snake. Python Snake.')
+fps = 5
 
 #define colours
 black = (0, 0, 0)
@@ -12,10 +16,12 @@ red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
 
+#define snake
+snake_size = 10
 
 gamedead = False
-head_x = 50
-head_y = 50
+head_x = scr_width / 2
+head_y = scr_height / 2
 inc_x = 0
 inc_y = 0
 clock = pygame.time.Clock()
@@ -27,25 +33,26 @@ while not gamedead:
             gamedead = True
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                inc_y = 10
+                inc_y = snake_size
                 inc_x = 0
             elif event.key == pygame.K_UP:
-                inc_y = -10
+                inc_y = -snake_size
                 inc_x = 0
             elif event.key == pygame.K_LEFT:
-                inc_x = -10
+                inc_x = -snake_size
                 inc_y = 0
             elif event.key == pygame.K_RIGHT:
-                inc_x = 10
+                inc_x = snake_size
                 inc_y = 0
 
 
     head_x += inc_x
     head_y += inc_y
-    pygame.draw.rect(screen, red, [head_x, head_y, 15, 15])
+    screen.fill(black)
+    pygame.draw.rect(screen, red, [head_x, head_y, snake_size, snake_size])
     pygame.display.update()
 
-    clock.tick(5)
+    clock.tick(fps)
 
 
 pygame.quit()
