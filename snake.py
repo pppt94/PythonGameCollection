@@ -28,22 +28,28 @@ class Snake():
         self.head_x = scr_width / 2
         self.head_y = scr_height / 2
         self.snake_size = snake_size
+        self.snake_body = []
+        self.snake_length = 1
 
     def update_position(self, inc_x, inc_y):
 
         self.head_x += inc_x
         self.head_y += inc_y
 
+        snake_current_head = (self.head_x, self.head_y)
+        self.snake_body.append(snake_current_head)
+        if len(self.snake_body) > self.snake_length:
+            del self.snake_body[0]
+
     def draw_snake(self):
 
-        pygame.draw.rect(screen, red, [self.head_x, self.head_y, self.snake_size, self.snake_size])
+        for segment in self.snake_body:
+            pygame.draw.rect(screen, red, [segment[0], segment[1], self.snake_size, self.snake_size])
 
     def eating_food(self, food_x, food_y, food_size):
 
-        if self.head_x >= food_x and self.head_x <= food_x + food_size:
-            if self.head_y >= food_y and self.head_y <= food_y + food_size:
-                # BIGGER SNAKE
-                pass
+        if self.head_x == food_x and self.head_y == food_y:
+            self.snake_length += 1
 
 
 class Food():
@@ -122,6 +128,7 @@ class Game():
 
             snake.update_position(inc_x, inc_y)
             screen.fill(black)
+            snake.eating_food(food.food_x, food.food_y, food.food_size)
             food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
             snake.draw_snake()
             food.draw_food()
