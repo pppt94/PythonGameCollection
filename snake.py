@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -19,6 +20,25 @@ blue = (0, 0, 255)
 
 #define snake
 snake_size = 20
+
+class Food():
+
+    def __init__(self):
+
+        self.food_x = None
+        self.food_y = None
+        self.food_size = 20
+        self.generate()
+
+    def generate(self):
+
+        self.food_x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
+        self.food_y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
+
+    def draw_food(self):
+
+        pygame.draw.rect(screen, green, [self.food_x, self.food_y, self.food_size, self.food_size])
+
 
 class Game():
 
@@ -43,6 +63,7 @@ class Game():
         head_y = scr_height / 2
         inc_x = 0
         inc_y = 0
+        app = Food()
 
         while True:
             for event in pygame.event.get():
@@ -63,6 +84,8 @@ class Game():
                         inc_x = snake_size
                         inc_y = 0
 
+
+
             if head_x >= scr_width or head_x <= 0 or head_y >= scr_height or head_y <= 0:
                 self.state = 2
                 return None
@@ -71,6 +94,7 @@ class Game():
             head_y += inc_y
             screen.fill(black)
             pygame.draw.rect(screen, red, [head_x, head_y, snake_size, snake_size])
+            app.draw_food()
             pygame.display.update()
 
             clock.tick(fps)
