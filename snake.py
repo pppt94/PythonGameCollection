@@ -21,6 +21,24 @@ blue = (0, 0, 255)
 #define snake
 snake_size = 20
 
+class Snake():
+
+    def __init__(self, snake_size):
+
+        self.head_x = scr_width / 2
+        self.head_y = scr_height / 2
+        self.snake_size = snake_size
+
+    def update_position(self, inc_x, inc_y):
+
+        self.head_x += inc_x
+        self.head_y += inc_y
+
+    def draw_snake(self):
+
+        pygame.draw.rect(screen, red, [self.head_x, self.head_y, self.snake_size, self.snake_size])
+
+
 class Food():
 
     def __init__(self):
@@ -59,11 +77,10 @@ class Game():
 
     def start_game(self):
 
-        head_x = scr_width / 2
-        head_y = scr_height / 2
         inc_x = 0
         inc_y = 0
         app = Food()
+        snake = Snake(snake_size)
 
         while True:
             for event in pygame.event.get():
@@ -86,14 +103,13 @@ class Game():
 
 
 
-            if head_x >= scr_width or head_x <= 0 or head_y >= scr_height or head_y <= 0:
+            if snake.head_x >= scr_width or snake.head_x <= 0 or snake.head_y >= scr_height or snake.head_y <= 0:
                 self.state = 2
                 return None
 
-            head_x += inc_x
-            head_y += inc_y
+            snake.update_position(inc_x, inc_y)
             screen.fill(black)
-            pygame.draw.rect(screen, red, [head_x, head_y, snake_size, snake_size])
+            snake.draw_snake()
             app.draw_food()
             pygame.display.update()
 
