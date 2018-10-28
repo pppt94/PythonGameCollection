@@ -38,6 +38,13 @@ class Snake():
 
         pygame.draw.rect(screen, red, [self.head_x, self.head_y, self.snake_size, self.snake_size])
 
+    def eating_food(self, food_x, food_y, food_size):
+
+        if self.head_x >= food_x and self.head_x <= food_x + food_size:
+            if self.head_y >= food_y and self.head_y <= food_y + food_size:
+                # BIGGER SNAKE
+                pass
+
 
 class Food():
 
@@ -48,15 +55,21 @@ class Food():
         self.food_size = 20
         self.generate()
 
+
     def generate(self):
 
         self.food_x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
         self.food_y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
 
+
     def draw_food(self):
 
         pygame.draw.rect(screen, green, [self.food_x, self.food_y, self.food_size, self.food_size])
 
+    def snake_eating(self, snake_x, snake_y, snake_size):
+
+        if self.food_x == snake_x and self.food_y == snake_y:
+            self.generate()
 
 class Game():
 
@@ -79,7 +92,7 @@ class Game():
 
         inc_x = 0
         inc_y = 0
-        app = Food()
+        food = Food()
         snake = Snake(snake_size)
 
         while True:
@@ -109,8 +122,9 @@ class Game():
 
             snake.update_position(inc_x, inc_y)
             screen.fill(black)
+            food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
             snake.draw_snake()
-            app.draw_food()
+            food.draw_food()
             pygame.display.update()
 
             clock.tick(fps)
