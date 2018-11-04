@@ -77,6 +77,31 @@ class Food():
         if self.food_x == snake_x and self.food_y == snake_y:
             self.generate()
 
+
+class Text():
+
+    def __init__(self, text, colour, position, size):
+
+        self.text = text
+        self.colour = colour
+        self.position = position
+        self.size = size
+        self.text_font = None
+        self.text_rect = None
+
+    def text_obj(self):
+
+        font = pygame.font.SysFont(None, self.size)
+
+        self.text_font = font.render(self.text, True, self.colour)
+        self.text_rect = self.text_font.get_rect()
+
+    def print_text(self):
+
+        self.text_obj()
+        self.text_rect.center = (self.position[0]), (self.position[1])
+        screen.blit(self.text_font, self.text_rect)
+
 class Game():
 
     def __init__(self):
@@ -138,11 +163,13 @@ class Game():
 
     def game_over(self):
 
+        text_1 = Text("Game Over", red, (scr_width / 2, scr_height / 2 - 50), 40)
+        text_2 = Text("Press SPACE for Play Again or ESC for Quit Game", red, (scr_width / 2, scr_height / 2 + 50), 25)
+
         while True:
             screen.fill(white)
-            font = pygame.font.SysFont(None, 25)
-            screen_text = font.render("Press ESC or SPACE", True, red)
-            screen.blit(screen_text, [scr_width/2, scr_height/2])
+            text_1.print_text()
+            text_2.print_text()
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
