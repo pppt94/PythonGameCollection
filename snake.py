@@ -20,7 +20,6 @@ blue = (0, 0, 255)
 
 #define snake
 snake_size = 20
-img = pygame.image.load('snake_head.png')
 
 class Snake():
 
@@ -31,22 +30,62 @@ class Snake():
         self.snake_size = snake_size
         self.snake_body = []
         self.snake_length = 1
+        self.head_direction = "UP"
+        self.head_img = pygame.image.load('snake_head.png')
+        self.head = self.head_img
+        self.body_img = pygame.image.load('snake_body.png')
+        self.body = self.body_img
+        self.curves_img = pygame.image.load('snake_curves.png')
+        self.curves = self.curves_img
 
-    def update_position(self, inc_x, inc_y):
+    def update_position(self, inc_x, inc_y, direction):
 
         self.head_x += inc_x
         self.head_y += inc_y
-
-        snake_current_head = (self.head_x, self.head_y)
+        self.head_direction = direction
+        snake_current_head = (self.head_x, self.head_y, self.head_direction)
         self.snake_body.append(snake_current_head)
         if len(self.snake_body) > self.snake_length:
             del self.snake_body[0]
 
+    def get_head_direction(self):
+
+        if self.head_direction == "UP":
+            self.head = self.head_img
+        elif self.head_direction == "DOWN":
+            self.head = pygame.transform.rotate(self.head_img, 180)
+        elif self.head_direction == "RIGHT":
+            self.head = pygame.transform.rotate(self.head_img, 270)
+        elif self.head_direction == "LEFT":
+            self.head = pygame.transform.rotate(self.head_img, 90)
+
+    def get_body_direction(self, segment, segment_idx):
+
+        if self.snake_body[segment_idx + 1][2] == "UP":
+            if segment_idx > - len(self.snake_body):
+                print('aa')
+                if self.snake_body[segment_idx - 1][2] == "UP" or self.snake_body[segment_idx - 1][2] == "DOWN":
+                    self.body = self.body_img
+                elif self.snake_body[segment_idx - 1][2] == "LEFT":
+                    self.body = pygame.transform.rotate(self.curves_img, 90)
+                elif self.snake_body[segment_idx - 1][2] == "RIGHT":
+                    self.body = pygame.transform.rotate(self.curves_img, 180)
+            else:
+                self.body = self.body_img
+        elif self.snake_body[segment_idx + 1][2] == "LEFT" or self.snake_body[segment_idx + 1][2] == "RIGHT":
+            self.body = pygame.transform.rotate(self.body_img, 90)
+
+
     def draw_snake(self):
 
-        screen.blit(img, (self.snake_body[-1][0], self.snake_body[-1][1]))
+        self.get_head_direction()
+        screen.blit(self.head, (self.snake_body[-1][0], self.snake_body[-1][1]))
+
+        segment_idx = -2
         for segment in self.snake_body[:-1]:
-            pygame.draw.rect(screen, red, [segment[0], segment[1], self.snake_size, self.snake_size])
+            self.get_body_direction(segment, segment_idx)
+            screen.blit(self.body, (segment[0], segment[1]))
+            segment_idx -= 1
 
     def eating_food(self, food_x, food_y, food_size):
 
@@ -127,6 +166,7 @@ class Game():
         inc_y = 0
         food = Food()
         snake = Snake(snake_size)
+        direction = None
 
         while True:
             for event in pygame.event.get():
@@ -137,15 +177,19 @@ class Game():
                     if event.key == pygame.K_DOWN:
                         inc_y = snake_size
                         inc_x = 0
+                        direction = "DOWN"
                     elif event.key == pygame.K_UP:
                         inc_y = -snake_size
                         inc_x = 0
+                        direction = "UP"
                     elif event.key == pygame.K_LEFT:
                         inc_x = -snake_size
                         inc_y = 0
+                        direction = "LEFT"
                     elif event.key == pygame.K_RIGHT:
                         inc_x = snake_size
                         inc_y = 0
+                        direction = "RIGHT"
                     elif event.key == pygame.K_p:
                         self.game_pause()
 
@@ -155,7 +199,7 @@ class Game():
                 self.state = 2
                 return None
 
-            snake.update_position(inc_x, inc_y)
+            snake.update_position(inc_x, inc_y, direction)
             screen.fill(black)
             snake.eating_food(food.food_x, food.food_y, food.food_size)
             food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
