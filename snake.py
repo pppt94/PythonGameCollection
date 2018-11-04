@@ -20,6 +20,7 @@ blue = (0, 0, 255)
 
 #define snake
 snake_size = 20
+img = pygame.image.load('snake_head.png')
 
 class Snake():
 
@@ -43,7 +44,8 @@ class Snake():
 
     def draw_snake(self):
 
-        for segment in self.snake_body:
+        screen.blit(img, (self.snake_body[-1][0], self.snake_body[-1][1]))
+        for segment in self.snake_body[:-1]:
             pygame.draw.rect(screen, red, [segment[0], segment[1], self.snake_size, self.snake_size])
 
     def eating_food(self, food_x, food_y, food_size):
@@ -144,6 +146,8 @@ class Game():
                     elif event.key == pygame.K_RIGHT:
                         inc_x = snake_size
                         inc_y = 0
+                    elif event.key == pygame.K_p:
+                        self.game_pause()
 
 
 
@@ -182,6 +186,21 @@ class Game():
                 if event.type == pygame.QUIT:
                     self.state = 3
                     return None
+
+    def game_pause(self):
+
+        text_1 = Text("Game Paused", red, (scr_width / 2, scr_height / 2 - 50), 40)
+        text_2 = Text("Press SPACE for return to the game!", red, (scr_width / 2, scr_height / 2 + 50), 25)
+
+        while True:
+            screen.fill(white)
+            text_1.print_text()
+            text_2.print_text()
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        return None
 
     def game_exit(self):
         pygame.quit()
