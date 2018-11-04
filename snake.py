@@ -59,21 +59,48 @@ class Snake():
         elif self.head_direction == "LEFT":
             self.head = pygame.transform.rotate(self.head_img, 90)
 
-    def get_body_direction(self, segment, segment_idx):
+    def get_body_direction(self, segment_idx):
 
         if self.snake_body[segment_idx + 1][2] == "UP":
             if segment_idx > - len(self.snake_body):
-                print('aa')
-                if self.snake_body[segment_idx - 1][2] == "UP" or self.snake_body[segment_idx - 1][2] == "DOWN":
+                if self.snake_body[segment_idx ][2] == "UP" or self.snake_body[segment_idx][2] == "DOWN":
                     self.body = self.body_img
-                elif self.snake_body[segment_idx - 1][2] == "LEFT":
+                elif self.snake_body[segment_idx][2] == "LEFT":
                     self.body = pygame.transform.rotate(self.curves_img, 90)
-                elif self.snake_body[segment_idx - 1][2] == "RIGHT":
+                elif self.snake_body[segment_idx][2] == "RIGHT":
                     self.body = pygame.transform.rotate(self.curves_img, 180)
             else:
                 self.body = self.body_img
-        elif self.snake_body[segment_idx + 1][2] == "LEFT" or self.snake_body[segment_idx + 1][2] == "RIGHT":
-            self.body = pygame.transform.rotate(self.body_img, 90)
+        elif self.snake_body[segment_idx + 1][2] == "DOWN":
+            if segment_idx > - len(self.snake_body):
+                if self.snake_body[segment_idx ][2] == "UP" or self.snake_body[segment_idx][2] == "DOWN":
+                    self.body = self.body_img
+                elif self.snake_body[segment_idx][2] == "LEFT":
+                    self.body = self.curves_img
+                elif self.snake_body[segment_idx][2] == "RIGHT":
+                    self.body = pygame.transform.rotate(self.curves_img, 270)
+            else:
+                self.body = self.body_img
+        elif self.snake_body[segment_idx + 1][2] == "LEFT":
+            if segment_idx > - len(self.snake_body):
+                if self.snake_body[segment_idx ][2] == "LEFT" or self.snake_body[segment_idx][2] == "RIGHT":
+                    self.body = pygame.transform.rotate(self.body_img, 90)
+                elif self.snake_body[segment_idx][2] == "UP":
+                    self.body = pygame.transform.rotate(self.curves_img, 270)
+                elif self.snake_body[segment_idx][2] == "DOWN":
+                    self.body = pygame.transform.rotate(self.curves_img, 180)
+            else:
+                self.body = pygame.transform.rotate(self.body_img, 90)
+        elif self.snake_body[segment_idx + 1][2] == "RIGHT":
+            if segment_idx > - len(self.snake_body):
+                if self.snake_body[segment_idx ][2] == "LEFT" or self.snake_body[segment_idx][2] == "RIGHT":
+                    self.body = pygame.transform.rotate(self.body_img, 90)
+                elif self.snake_body[segment_idx][2] == "UP":
+                    self.body = self.curves_img
+                elif self.snake_body[segment_idx][2] == "DOWN":
+                    self.body = pygame.transform.rotate(self.curves_img, 90)
+            else:
+                self.body = pygame.transform.rotate(self.body_img, 90)
 
 
     def draw_snake(self):
@@ -81,9 +108,9 @@ class Snake():
         self.get_head_direction()
         screen.blit(self.head, (self.snake_body[-1][0], self.snake_body[-1][1]))
 
-        segment_idx = -2
-        for segment in self.snake_body[:-1]:
-            self.get_body_direction(segment, segment_idx)
+        for segment_idx in range(-2, -len(self.snake_body) - 1, -1):
+            self.get_body_direction(segment_idx)
+            segment = self.snake_body[segment_idx]
             screen.blit(self.body, (segment[0], segment[1]))
             segment_idx -= 1
 
@@ -195,7 +222,7 @@ class Game():
 
 
 
-            if snake.head_x >= scr_width or snake.head_x <= 0 or snake.head_y >= scr_height or snake.head_y <= 0:
+            if snake.head_x >= scr_width or snake.head_x < 0 or snake.head_y >= scr_height or snake.head_y < 0:
                 self.state = 2
                 return None
 
