@@ -37,6 +37,8 @@ class Snake():
         self.body = self.body_img
         self.curves_img = pygame.image.load('snake_curves.png')
         self.curves = self.curves_img
+        self.tail_img = pygame.image.load('snake_tail.png')
+        self.tail = self.tail_img
 
     def update_position(self, inc_x, inc_y, direction):
 
@@ -102,6 +104,16 @@ class Snake():
             else:
                 self.body = pygame.transform.rotate(self.body_img, 90)
 
+    def get_tail_direction(self, segment_idx):
+
+        if self.snake_body[segment_idx + 1][2] == "UP":
+            self.tail = self.tail_img
+        elif self.snake_body[segment_idx + 1][2] == "DOWN":
+            self.tail = pygame.transform.rotate(self.tail_img, 180)
+        elif self.snake_body[segment_idx + 1][2] == "LEFT":
+            self.tail = pygame.transform.rotate(self.tail_img, 90)
+        elif self.snake_body[segment_idx + 1][2] == "RIGHT":
+            self.tail = pygame.transform.rotate(self.tail_img, 270)
 
     def draw_snake(self):
 
@@ -109,9 +121,14 @@ class Snake():
         screen.blit(self.head, (self.snake_body[-1][0], self.snake_body[-1][1]))
 
         for segment_idx in range(-2, -len(self.snake_body) - 1, -1):
-            self.get_body_direction(segment_idx)
-            segment = self.snake_body[segment_idx]
-            screen.blit(self.body, (segment[0], segment[1]))
+            if segment_idx > -len(self.snake_body):
+                self.get_body_direction(segment_idx)
+                segment = self.snake_body[segment_idx]
+                screen.blit(self.body, (segment[0], segment[1]))
+            else:
+                self.get_tail_direction(segment_idx)
+                segment = self.snake_body[segment_idx]
+                screen.blit(self.tail, (segment[0], segment[1]))
             segment_idx -= 1
 
     def eating_food(self, food_x, food_y, food_size):
