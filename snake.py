@@ -5,8 +5,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 #define screen
-scr_width = 800
-scr_height = 600
+scr_width = 880
+scr_height = 720
 screen = pygame.display.set_mode((scr_width, scr_height))
 pygame.display.set_caption('I am snake. Python Snake.')
 fps = 5
@@ -19,7 +19,7 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 
 #define snake
-snake_size = 20
+snake_size = 40
 
 class Snake():
 
@@ -152,8 +152,9 @@ class Food():
 
         self.food_x = None
         self.food_y = None
-        self.food_size = 20
+        self.food_size = 40
         self.generate()
+        self.syntax = pygame.image.load('food_syntax.png')
 
 
     def generate(self):
@@ -164,7 +165,8 @@ class Food():
 
     def draw_food(self):
 
-        pygame.draw.rect(screen, green, [self.food_x, self.food_y, self.food_size, self.food_size])
+        #pygame.draw.rect(screen, green, [self.food_x, self.food_y, self.food_size, self.food_size])
+        screen.blit(self.syntax, (self.food_x, self.food_y))
 
     def snake_eating(self, snake_x, snake_y, snake_size):
 
@@ -217,11 +219,13 @@ class Game():
 
     def menu_game(self):
 
-        text_1 = Text("Welcome", red, (scr_width / 2, scr_height / 2 - 50), 40)
+        text_1 = Text("Welcome", red, (scr_width / 2, scr_height / 2-100), 90)
+        text_2 = Text("Press SPACE to Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
 
         while True:
             screen.fill(white)
             text_1.print_text()
+            text_2.print_text()
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -276,7 +280,7 @@ class Game():
                 return None
 
             snake.update_position(inc_x, inc_y, direction)
-            screen.fill(black)
+            screen.fill(white)
             snake.eating_food(food.food_x, food.food_y, food.food_size)
             food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
             snake.draw_snake()
