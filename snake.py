@@ -154,7 +154,12 @@ class Food():
         self.food_y = None
         self.food_size = 40
         self.generate()
-        self.syntax = pygame.image.load('food_syntax.png')
+        self.syn = pygame.image.load('food_syntax.png')
+        self.imp = pygame.image.load('food_import.png')
+        self.ind = pygame.image.load('food_index.png')
+        self.nam = pygame.image.load('food_name.png')
+        self.typ = pygame.image.load('food_type.png')
+        self.current_food = self.syn
 
 
     def generate(self):
@@ -165,12 +170,12 @@ class Food():
 
     def draw_food(self):
 
-        #pygame.draw.rect(screen, green, [self.food_x, self.food_y, self.food_size, self.food_size])
-        screen.blit(self.syntax, (self.food_x, self.food_y))
+        screen.blit(self.current_food, (self.food_x, self.food_y))
 
     def snake_eating(self, snake_x, snake_y, snake_size):
 
         if self.food_x == snake_x and self.food_y == snake_y:
+            self.current_food = random.choice([self.syn, self.imp, self.ind, self.nam, self.typ])
             self.generate()
 
 
