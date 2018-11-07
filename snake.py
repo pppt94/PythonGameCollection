@@ -244,6 +244,8 @@ class Game():
                 self.game_over()
             elif self.state == 3:
                 self.game_exit()
+            elif self.state == 4:
+                self.help_game()
 
     def menu_game(self):
 
@@ -278,6 +280,9 @@ class Game():
                         if select == "Play Game!":
                             self.state = 1
                             return None
+                        if select == "Help":
+                            self.state = 4
+                            return None
                         if select == "Quit Game":
                             self.state = 3
                             return None
@@ -301,6 +306,28 @@ class Game():
             text_3.print_text()
             pygame.display.update()
 
+    def help_game(self):
+
+        text_1 = Text("How to play???", red, (scr_width / 2, 40), 90)
+        text_2 = Text("Eat errors.", red, (scr_width / 2, 140), 40)
+        text_3 = Text("Use arrow keys.", red, (scr_width / 2, 240), 40)
+        text_4 = Text("Press ESC to go back.", red, (scr_width / 2, 640), 40)
+
+        while True:
+            screen.fill(white)
+            text_1.print_text()
+            text_2.print_text()
+            text_3.print_text()
+            text_4.print_text()
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.state = 3
+                    return None
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.state = 0
+                        return None
     def start_game(self):
 
         inc_x = 0
