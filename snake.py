@@ -9,7 +9,7 @@ scr_width = 800
 scr_height = 600
 screen = pygame.display.set_mode((scr_width, scr_height))
 pygame.display.set_caption('I am snake. Python Snake.')
-fps = 15
+fps = 5
 
 #define colours
 black = (0, 0, 0)
@@ -200,18 +200,37 @@ class Game():
 
     def __init__(self):
 
-        self.state = 1
+        self.state = 0
         self.game_loop()
 
     def game_loop(self):
 
         while True:
-            if self.state == 1:
+            if self.state == 0:
+                self.menu_game()
+            elif self.state == 1:
                 self.start_game()
             elif self.state == 2:
                 self.game_over()
             elif self.state == 3:
                 self.game_exit()
+
+    def menu_game(self):
+
+        text_1 = Text("Welcome", red, (scr_width / 2, scr_height / 2 - 50), 40)
+
+        while True:
+            screen.fill(white)
+            text_1.print_text()
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.state = 3
+                    return None
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.state = 1
+                        return None
 
     def start_game(self):
 
@@ -263,6 +282,9 @@ class Game():
             snake.draw_snake()
             food.draw_food()
             pygame.display.update()
+            if snake.check_colision():
+                self.state = 2
+                return None
 
             clock.tick(fps)
 
