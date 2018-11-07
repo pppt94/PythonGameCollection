@@ -9,7 +9,7 @@ scr_width = 800
 scr_height = 600
 screen = pygame.display.set_mode((scr_width, scr_height))
 pygame.display.set_caption('I am snake. Python Snake.')
-fps = 5
+fps = 15
 
 #define colours
 black = (0, 0, 0)
@@ -137,6 +137,15 @@ class Snake():
             self.snake_length += 1
 
 
+    def check_colision(self):
+
+        cord_list = [(i[0], i[1]) for i in self.snake_body[:-1]]
+
+        if (self.head_x, self.head_y) in cord_list:
+            return True
+        else:
+            return False
+
 class Food():
 
     def __init__(self):
@@ -240,6 +249,10 @@ class Game():
 
 
             if snake.head_x >= scr_width or snake.head_x < 0 or snake.head_y >= scr_height or snake.head_y < 0:
+                self.state = 2
+                return None
+
+            if snake.check_colision():
                 self.state = 2
                 return None
 
