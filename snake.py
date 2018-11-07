@@ -132,9 +132,9 @@ class Snake():
                 screen.blit(self.tail, (segment[0], segment[1]))
             segment_idx -= 1
 
-    def eating_food(self, food_x, food_y, food_size):
+    def eating_food(self, food_x, food_y, bonus_food_x, bonus_food_y):
 
-        if self.head_x == food_x and self.head_y == food_y:
+        if (self.head_x == food_x and self.head_y == food_y) or self.head_x == bonus_food_x and self.head_y == bonus_food_y:
             self.snake_length += 1
 
 
@@ -153,14 +153,17 @@ class Food():
 
         self.food_x = None
         self.food_y = None
+        self.bonus_food_x = None
+        self.bonus_food_y = None
         self.food_size = 40
         self.generate()
+        self.generate_bonus_food()
         self.syn = pygame.image.load('food_syntax.png')
         self.imp = pygame.image.load('food_import.png')
         self.ind = pygame.image.load('food_index.png')
         self.nam = pygame.image.load('food_name.png')
         self.typ = pygame.image.load('food_type.png')
-        self.current_food = self.syn
+        self.current_food = self.imp
 
 
     def generate(self):
@@ -168,17 +171,31 @@ class Food():
         self.food_x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
         self.food_y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
 
+    def generate_bonus_food(self):
+
+        self.bonus_food_x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
+        self.bonus_food_y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
+
 
     def draw_food(self):
 
         screen.blit(self.current_food, (self.food_x, self.food_y))
 
+    def draw_bonus_food(self):
+
+        screen.blit(self.syn, (self.bonus_food_x, self.bonus_food_y))
+
     def snake_eating(self, snake_x, snake_y, snake_size):
 
         if self.food_x == snake_x and self.food_y == snake_y:
-            self.current_food = random.choice([self.syn, self.imp, self.ind, self.nam, self.typ])
+            self.current_food = random.choice([self.imp, self.ind, self.nam, self.typ])
             self.generate()
 
+
+    def snake_eating_bonus(self, snake_x, snake_y, snake_size):
+
+        if self.bonus_food_x == snake_x and self.bonus_food_y == snake_y:
+            return True
 
 class Text():
 
@@ -232,7 +249,8 @@ class Game():
 
         text_1 = Text("Welcome", red, (scr_width / 2, scr_height / 2-100), 90)
         text_2 = Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
-        text_3 = Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 100), 40)
+        text_3 = Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 150), 40)
+        text_4 = Text("Help", red, (scr_width / 2, scr_height / 2 + 100), 40)
 
         select = "Play Game!"
 
@@ -247,9 +265,15 @@ class Game():
                         self.state = 1
                         return None
                     elif event.key == pygame.K_DOWN:
-                        select = "Quit Game"
+                        if select == "Play Game!":
+                            select = "Help"
+                        else:
+                            select = "Quit Game"
                     elif event.key == pygame.K_UP:
-                        select = "Play Game!"
+                        if select == "Help":
+                            select = "Play Game!"
+                        elif select == "Quit Game":
+                            select = "Help"
                     if event.key == pygame.K_RETURN:
                         if select == "Play Game!":
                             self.state = 1
@@ -265,6 +289,11 @@ class Game():
             else:
                 text_2.change_colour(red)
             text_2.print_text()
+            if select == "Help":
+                text_4.change_colour(gold)
+            else:
+                text_4.change_colour(red)
+            text_4.print_text()
             if select == "Quit Game":
                 text_3.change_colour(gold)
             else:
@@ -279,6 +308,7 @@ class Game():
         food = Food()
         snake = Snake(snake_size)
         direction = None
+        timer = 0
 
         while True:
             for event in pygame.event.get():
@@ -314,13 +344,25 @@ class Game():
             if snake.check_colision():
                 self.state = 2
                 return None
+            timer +=1
 
             snake.update_position(inc_x, inc_y, direction)
             screen.blit(self.back, (0, 0))
-            snake.eating_food(food.food_x, food.food_y, food.food_size)
+            snake.eating_food(food.food_x, food.food_y, food.bonus_food_x, food.bonus_food_y)
             food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
+            if timer > 20:
+                if food.snake_eating_bonus(snake.head_x, snake.head_y, snake.snake_size):
+                    food.generate_bonus_food()
+                    timer = 0
+                if timer > 20:
+                    food.draw_bonus_food()
+                if timer > 40:
+                    food.generate_bonus_food()
+                    timer = 0
+
             snake.draw_snake()
             food.draw_food()
+
             pygame.display.update()
             if snake.check_colision():
                 self.state = 2
