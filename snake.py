@@ -17,6 +17,7 @@ white = (255, 255, 255)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+gold = (255, 215, 0)
 
 #define snake
 snake_size = 40
@@ -203,6 +204,10 @@ class Text():
         self.text_rect.center = (self.position[0]), (self.position[1])
         screen.blit(self.text_font, self.text_rect)
 
+    def change_colour(self, colour):
+
+        self.colour = colour
+
 class Game():
 
     def __init__(self):
@@ -226,13 +231,13 @@ class Game():
     def menu_game(self):
 
         text_1 = Text("Welcome", red, (scr_width / 2, scr_height / 2-100), 90)
-        text_2 = Text("Press SPACE to Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
+        text_2 = Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
+        text_3 = Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 100), 40)
+
+        select = "Play Game!"
 
         while True:
-            screen.fill(white)
-            text_1.print_text()
-            text_2.print_text()
-            pygame.display.update()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.state = 3
@@ -241,6 +246,31 @@ class Game():
                     if event.key == pygame.K_SPACE:
                         self.state = 1
                         return None
+                    elif event.key == pygame.K_DOWN:
+                        select = "Quit Game"
+                    elif event.key == pygame.K_UP:
+                        select = "Play Game!"
+                    if event.key == pygame.K_RETURN:
+                        if select == "Play Game!":
+                            self.state = 1
+                            return None
+                        if select == "Quit Game":
+                            self.state = 3
+                            return None
+
+            screen.fill(white)
+            text_1.print_text()
+            if select == "Play Game!":
+                text_2.change_colour(gold)
+            else:
+                text_2.change_colour(red)
+            text_2.print_text()
+            if select == "Quit Game":
+                text_3.change_colour(gold)
+            else:
+                text_3.change_colour(red)
+            text_3.print_text()
+            pygame.display.update()
 
     def start_game(self):
 
