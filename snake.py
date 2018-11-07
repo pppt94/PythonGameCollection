@@ -208,6 +208,7 @@ class Game():
     def __init__(self):
 
         self.state = 0
+        self.back = pygame.image.load('back.png')
         self.game_loop()
 
     def game_loop(self):
@@ -285,7 +286,7 @@ class Game():
                 return None
 
             snake.update_position(inc_x, inc_y, direction)
-            screen.fill(white)
+            screen.blit(self.back, (0, 0))
             snake.eating_food(food.food_x, food.food_y, food.food_size)
             food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
             snake.draw_snake()
