@@ -190,12 +190,45 @@ class Food():
         if self.food_x == snake_x and self.food_y == snake_y:
             self.current_food = random.choice([self.imp, self.ind, self.nam, self.typ])
             self.generate()
+            return True
 
 
     def snake_eating_bonus(self, snake_x, snake_y, snake_size):
 
         if self.bonus_food_x == snake_x and self.bonus_food_y == snake_y:
             return True
+
+class Score():
+
+    def __init__(self):
+
+        self.result = 0
+
+    def get_score_str(self):
+
+        str_res = str(self.result)
+
+        return "Score: "+str_res
+
+    def get_score(self):
+
+        return self.result
+
+    def update_score(self):
+
+        self.result += 10
+
+    def update_score_special(self):
+
+        self.result += 20
+
+    def show_score(self):
+
+        text_1 = Text(self.get_score_str(), red, (scr_width / 2, 40), 90)
+
+        text_1.print_text()
+
+
 
 class Text():
 
@@ -334,8 +367,11 @@ class Game():
         inc_y = 0
         food = Food()
         snake = Snake(snake_size)
+        score = Score()
         direction = None
         timer = 0
+
+
 
         while True:
             for event in pygame.event.get():
@@ -376,9 +412,11 @@ class Game():
             snake.update_position(inc_x, inc_y, direction)
             screen.blit(self.back, (0, 0))
             snake.eating_food(food.food_x, food.food_y, food.bonus_food_x, food.bonus_food_y)
-            food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
+            if food.snake_eating(snake.head_x, snake.head_y, snake.snake_size):
+                score.update_score()
             if timer > 20:
                 if food.snake_eating_bonus(snake.head_x, snake.head_y, snake.snake_size):
+                    score.update_score_special()
                     food.generate_bonus_food()
                     timer = 0
                 if timer > 20:
@@ -389,6 +427,8 @@ class Game():
 
             snake.draw_snake()
             food.draw_food()
+            score.show_score()
+
 
             pygame.display.update()
             if snake.check_colision():
