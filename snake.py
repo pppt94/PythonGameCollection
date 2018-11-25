@@ -264,6 +264,7 @@ class Game():
 
         self.state = 0
         self.back = pygame.image.load('Graphics/back.png')
+        self.menu_back = pygame.image.load('Graphics/menu.png')
         self.game_loop()
         self.score = " "
 
@@ -283,7 +284,7 @@ class Game():
 
     def menu_game(self):
 
-        text_1 = Text("Welcome", red, (scr_width / 2, scr_height / 2-100), 90)
+        text_1 = Text("Error Eater", red, (scr_width / 2, scr_height / 2-100), 90)
         text_2 = Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
         text_3 = Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 150), 40)
         text_4 = Text("Help", red, (scr_width / 2, scr_height / 2 + 100), 40)
@@ -321,7 +322,7 @@ class Game():
                             self.state = 3
                             return None
 
-            screen.fill(white)
+            screen.blit(self.menu_back, (0, 0))
             text_1.print_text()
             if select == "Play Game!":
                 text_2.change_colour(gold)
