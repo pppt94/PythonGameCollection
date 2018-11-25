@@ -8,7 +8,7 @@ clock = pygame.time.Clock()
 scr_width = 880
 scr_height = 720
 screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('I am snake. Python Snake.')
+pygame.display.set_caption('Error Eater')
 fps = 5
 
 #define colours
@@ -32,13 +32,13 @@ class Snake():
         self.snake_body = []
         self.snake_length = 1
         self.head_direction = "UP"
-        self.head_img = pygame.image.load('snake_head.png')
+        self.head_img = pygame.image.load('Graphics/snake_head.png')
         self.head = self.head_img
-        self.body_img = pygame.image.load('snake_body.png')
+        self.body_img = pygame.image.load('Graphics/snake_body.png')
         self.body = self.body_img
-        self.curves_img = pygame.image.load('snake_curves.png')
+        self.curves_img = pygame.image.load('Graphics/snake_curves.png')
         self.curves = self.curves_img
-        self.tail_img = pygame.image.load('snake_tail.png')
+        self.tail_img = pygame.image.load('Graphics/snake_tail.png')
         self.tail = self.tail_img
 
     def update_position(self, inc_x, inc_y, direction):
@@ -158,11 +158,11 @@ class Food():
         self.food_size = 40
         self.generate()
         self.generate_bonus_food()
-        self.syn = pygame.image.load('food_syntax.png')
-        self.imp = pygame.image.load('food_import.png')
-        self.ind = pygame.image.load('food_index.png')
-        self.nam = pygame.image.load('food_name.png')
-        self.typ = pygame.image.load('food_type.png')
+        self.syn = pygame.image.load('Graphics/food_syntax.png')
+        self.imp = pygame.image.load('Graphics/food_import.png')
+        self.ind = pygame.image.load('Graphics/food_index.png')
+        self.nam = pygame.image.load('Graphics/food_name.png')
+        self.typ = pygame.image.load('Graphics/food_type.png')
         self.current_food = self.imp
 
 
@@ -190,12 +190,45 @@ class Food():
         if self.food_x == snake_x and self.food_y == snake_y:
             self.current_food = random.choice([self.imp, self.ind, self.nam, self.typ])
             self.generate()
+            return True
 
 
     def snake_eating_bonus(self, snake_x, snake_y, snake_size):
 
         if self.bonus_food_x == snake_x and self.bonus_food_y == snake_y:
             return True
+
+class Score():
+
+    def __init__(self):
+
+        self.result = 0
+
+    def get_score_str(self):
+
+        str_res = str(self.result)
+
+        return "Score: "+str_res
+
+    def get_score(self):
+
+        return self.result
+
+    def update_score(self):
+
+        self.result += 10
+
+    def update_score_special(self):
+
+        self.result += 20
+
+    def show_score(self):
+
+        text_1 = Text(self.get_score_str(), red, (scr_width / 2, 40), 90)
+
+        text_1.print_text()
+
+
 
 class Text():
 
@@ -230,8 +263,10 @@ class Game():
     def __init__(self):
 
         self.state = 0
-        self.back = pygame.image.load('back.png')
+        self.back = pygame.image.load('Graphics/back.png')
+        self.menu_back = pygame.image.load('Graphics/menu.png')
         self.game_loop()
+        self.score = " "
 
     def game_loop(self):
 
@@ -249,7 +284,7 @@ class Game():
 
     def menu_game(self):
 
-        text_1 = Text("Welcome", red, (scr_width / 2, scr_height / 2-100), 90)
+        text_1 = Text("Error Eater", red, (scr_width / 2, scr_height / 2-100), 90)
         text_2 = Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
         text_3 = Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 150), 40)
         text_4 = Text("Help", red, (scr_width / 2, scr_height / 2 + 100), 40)
@@ -287,7 +322,7 @@ class Game():
                             self.state = 3
                             return None
 
-            screen.fill(white)
+            screen.blit(self.menu_back, (0, 0))
             text_1.print_text()
             if select == "Play Game!":
                 text_2.change_colour(gold)
@@ -334,8 +369,11 @@ class Game():
         inc_y = 0
         food = Food()
         snake = Snake(snake_size)
+        score = Score()
         direction = None
         timer = 0
+
+
 
         while True:
             for event in pygame.event.get():
@@ -376,9 +414,11 @@ class Game():
             snake.update_position(inc_x, inc_y, direction)
             screen.blit(self.back, (0, 0))
             snake.eating_food(food.food_x, food.food_y, food.bonus_food_x, food.bonus_food_y)
-            food.snake_eating(snake.head_x, snake.head_y, snake.snake_size)
+            if food.snake_eating(snake.head_x, snake.head_y, snake.snake_size):
+                score.update_score()
             if timer > 20:
                 if food.snake_eating_bonus(snake.head_x, snake.head_y, snake.snake_size):
+                    score.update_score_special()
                     food.generate_bonus_food()
                     timer = 0
                 if timer > 20:
@@ -389,6 +429,9 @@ class Game():
 
             snake.draw_snake()
             food.draw_food()
+            score.show_score()
+            self.score = str(score.get_score())
+
 
             pygame.display.update()
             if snake.check_colision():
@@ -399,13 +442,17 @@ class Game():
 
     def game_over(self):
 
-        text_1 = Text("Game Over", red, (scr_width / 2, scr_height / 2 - 50), 40)
+        text_1 = Text("Game Over", red, (scr_width / 2, scr_height / 2 - 50), 90)
         text_2 = Text("Press SPACE for Play Again or ESC for Quit Game", red, (scr_width / 2, scr_height / 2 + 50), 25)
+        text_3 = Text("Your score: ", red, (scr_width / 2 - 50, scr_height / 2 + 100), 25)
+        text_4 = Text(self.score, red, (scr_width / 2 + 50, scr_height / 2 + 100), 25)
 
         while True:
             screen.fill(white)
             text_1.print_text()
             text_2.print_text()
+            text_3.print_text()
+            text_4.print_text()
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
