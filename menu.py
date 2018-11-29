@@ -1,5 +1,6 @@
 import pygame
-import math
+import snake
+import text
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -19,41 +20,13 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 gold = (255, 215, 0)
 
-class Text():
-
-    def __init__(self, text, colour, position, size):
-
-        self.text = text
-        self.colour = colour
-        self.position = position
-        self.size = size
-        self.text_font = None
-        self.text_rect = None
-
-    def text_obj(self):
-
-        font = pygame.font.SysFont(None, self.size)
-
-        self.text_font = font.render(self.text, True, self.colour)
-        self.text_rect = self.text_font.get_rect()
-
-    def print_text(self):
-
-        self.text_obj()
-        self.text_rect.center = (self.position[0]), (self.position[1])
-        screen.blit(self.text_font, self.text_rect)
-
-    def change_colour(self, colour):
-
-        self.colour = colour
-
 class Menu():
 
     def __init__(self):
 
 
-        self.title = Text("Python Game Collection", red, (scr_width / 2, scr_height / 2 - 300), 100)
-        self.choose_text = Text("Choose game!", red, (scr_width / 2, scr_height / 2 - 150), 75)
+        self.title = text.Text("Python Game Collection", red, (scr_width / 2, scr_height / 2 - 300), 100)
+        self.choose_text = text.Text("Choose game!", red, (scr_width / 2, scr_height / 2 - 150), 75)
         self.select = "Master"
         self.menu_loop()
 
@@ -75,6 +48,9 @@ class Menu():
                             self.select = "Master"
                         else:
                             self.select = "Tetris"
+                    elif event.key == pygame.K_RETURN:
+                        if self.select == "Snake":
+                            snake.Game()
 
             #center (315, 270), (250, 180)
             field = pygame.Rect((315, 330), (250, 180))
