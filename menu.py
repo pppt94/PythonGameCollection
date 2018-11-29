@@ -24,10 +24,8 @@ class Menu():
 
     def __init__(self):
 
-
-        self.title = text.Text("Python Game Collection", red, (scr_width / 2, scr_height / 2 - 300), 100)
-        self.choose_text = text.Text("Choose game!", red, (scr_width / 2, scr_height / 2 - 150), 75)
         self.select = "Master"
+        self.menu_img = pygame.image.load('Graphics/mainmenu.png')
         self.menu_loop()
 
     def menu_loop(self):
@@ -53,12 +51,11 @@ class Menu():
                             snake.Game()
 
             #center (315, 270), (250, 180)
+            screen.blit(self.menu_img, (0, 0))
             field = pygame.Rect((315, 330), (250, 180))
             field2 = pygame.Rect((33, 330), (250, 180))
             field3= pygame.Rect((598, 330), (250, 180))
-            screen.fill(white)
-            self.title.print_text()
-            self.choose_text.print_text()
+
             if self.select == "Master":
                 pygame.draw.ellipse(screen, gold, field)
                 pygame.draw.ellipse(screen, red, field2)
