@@ -24,8 +24,10 @@ class Menu():
 
     def __init__(self):
 
-        self.select = "Master"
-        self.menu_img = pygame.image.load('Graphics/mainmenu.png')
+        self.select = "Tetris"
+        self.menu_eater = pygame.image.load('Graphics/menu_eater.png')
+        self.menu_pytris = pygame.image.load('Graphics/menu_pytris.png')
+        self.menu_mind = pygame.image.load('Graphics/menu_mind.png')
         self.menu_loop()
 
     def menu_loop(self):
@@ -37,39 +39,27 @@ class Menu():
                     return None
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
-                        if self.select == "Tetris":
-                            self.select = "Master"
+                        if self.select == "Master":
+                            self.select = "Tetris"
                         else:
                             self.select = "Snake"
                     elif event.key == pygame.K_LEFT:
                         if self.select == "Snake":
-                            self.select = "Master"
-                        else:
                             self.select = "Tetris"
+                        else:
+                            self.select = "Master"
                     elif event.key == pygame.K_RETURN:
                         if self.select == "Snake":
                             snake.Game()
 
-            #center (315, 270), (250, 180)
-            screen.blit(self.menu_img, (0, 0))
-            field = pygame.Rect((315, 330), (250, 180))
-            field2 = pygame.Rect((33, 330), (250, 180))
-            field3= pygame.Rect((598, 330), (250, 180))
+            screen.blit(self.menu_pytris, (0, 0))
 
             if self.select == "Master":
-                pygame.draw.ellipse(screen, gold, field)
-                pygame.draw.ellipse(screen, red, field2)
-                pygame.draw.ellipse(screen, red, field3)
+                screen.blit(self.menu_mind, (0, 0))
             elif self.select == "Tetris":
-                pygame.draw.ellipse(screen, red, field)
-                pygame.draw.ellipse(screen, gold, field2)
-                pygame.draw.ellipse(screen, red, field3)
+                screen.blit(self.menu_pytris, (0, 0))
             else:
-                pygame.draw.ellipse(screen, red, field)
-                pygame.draw.ellipse(screen, red, field2)
-                pygame.draw.ellipse(screen, gold, field3)
+                screen.blit(self.menu_eater, (0, 0))
             pygame.display.update()
-
-
 
 Menu()
