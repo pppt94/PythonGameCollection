@@ -1,5 +1,6 @@
 import pygame
 import snake
+import python_mind
 import text
 
 pygame.init()
@@ -51,6 +52,8 @@ class Menu():
                     elif event.key == pygame.K_RETURN:
                         if self.select == "Snake":
                             snake.Game()
+                        elif self.select == "Master":
+                            python_mind.Game()
 
             screen.blit(self.menu_pytris, (0, 0))
 
