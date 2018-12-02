@@ -1,5 +1,6 @@
 import pygame
 import random
+import text
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -224,39 +225,9 @@ class Score():
 
     def show_score(self):
 
-        text_1 = Text(self.get_score_str(), red, (scr_width / 2, 40), 90)
+        text_1 = text.Text(self.get_score_str(), red, (scr_width / 2, 40), 90)
 
         text_1.print_text()
-
-
-
-class Text():
-
-    def __init__(self, text, colour, position, size):
-
-        self.text = text
-        self.colour = colour
-        self.position = position
-        self.size = size
-        self.text_font = None
-        self.text_rect = None
-
-    def text_obj(self):
-
-        font = pygame.font.SysFont(None, self.size)
-
-        self.text_font = font.render(self.text, True, self.colour)
-        self.text_rect = self.text_font.get_rect()
-
-    def print_text(self):
-
-        self.text_obj()
-        self.text_rect.center = (self.position[0]), (self.position[1])
-        screen.blit(self.text_font, self.text_rect)
-
-    def change_colour(self, colour):
-
-        self.colour = colour
 
 class Game():
 
@@ -284,10 +255,10 @@ class Game():
 
     def menu_game(self):
 
-        text_1 = Text("Error Eater", red, (scr_width / 2, scr_height / 2-100), 90)
-        text_2 = Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
-        text_3 = Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 150), 40)
-        text_4 = Text("Help", red, (scr_width / 2, scr_height / 2 + 100), 40)
+        text_1 = text.Text("Error Eater", red, (scr_width / 2, scr_height / 2-100), 90)
+        text_2 = text.Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
+        text_3 = text.Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 150), 40)
+        text_4 = text.Text("Help", red, (scr_width / 2, scr_height / 2 + 100), 40)
 
         select = "Play Game!"
 
@@ -343,10 +314,10 @@ class Game():
 
     def help_game(self):
 
-        text_1 = Text("How to play???", red, (scr_width / 2, 40), 90)
-        text_2 = Text("Eat errors.", red, (scr_width / 2, 140), 40)
-        text_3 = Text("Use arrow keys.", red, (scr_width / 2, 240), 40)
-        text_4 = Text("Press ESC to go back.", red, (scr_width / 2, 640), 40)
+        text_1 = text.Text("How to play???", red, (scr_width / 2, 40), 90)
+        text_2 = text.Text("Eat errors.", red, (scr_width / 2, 140), 40)
+        text_3 = text.Text("Use arrow keys.", red, (scr_width / 2, 240), 40)
+        text_4 = text.Text("Press ESC to go back.", red, (scr_width / 2, 640), 40)
 
         while True:
             screen.fill(white)
@@ -442,10 +413,10 @@ class Game():
 
     def game_over(self):
 
-        text_1 = Text("Game Over", red, (scr_width / 2, scr_height / 2 - 50), 90)
-        text_2 = Text("Press SPACE for Play Again or ESC for Quit Game", red, (scr_width / 2, scr_height / 2 + 50), 25)
-        text_3 = Text("Your score: ", red, (scr_width / 2 - 50, scr_height / 2 + 100), 25)
-        text_4 = Text(self.score, red, (scr_width / 2 + 50, scr_height / 2 + 100), 25)
+        text_1 = text.Text("Game Over", red, (scr_width / 2, scr_height / 2 - 50), 90)
+        text_2 = text.Text("Press SPACE for Play Again or ESC for Quit Game", red, (scr_width / 2, scr_height / 2 + 50), 25)
+        text_3 = text.Text("Your score: ", red, (scr_width / 2 - 50, scr_height / 2 + 100), 25)
+        text_4 = text.Text(self.score, red, (scr_width / 2 + 50, scr_height / 2 + 100), 25)
 
         while True:
             screen.fill(white)
@@ -468,8 +439,8 @@ class Game():
 
     def game_pause(self):
 
-        text_1 = Text("Game Paused", red, (scr_width / 2, scr_height / 2 - 50), 40)
-        text_2 = Text("Press SPACE for return to the game!", red, (scr_width / 2, scr_height / 2 + 50), 25)
+        text_1 = text.Text("Game Paused", red, (scr_width / 2, scr_height / 2 - 50), 40)
+        text_2 = text.Text("Press SPACE for return to the game!", red, (scr_width / 2, scr_height / 2 + 50), 25)
 
         while True:
             screen.fill(white)
@@ -485,4 +456,4 @@ class Game():
         pygame.quit()
         quit()
 
-Game()
+#Game()
