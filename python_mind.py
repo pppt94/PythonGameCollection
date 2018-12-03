@@ -28,6 +28,7 @@ class Types():
         self.type_array = [black, orange, red, green, blue, gold]
         self.game_array = []
         self.player_array = []
+        self.type_idx = 0
         self.fill_arrays()
 
     def fill_arrays(self):
@@ -35,7 +36,7 @@ class Types():
         self.game_array = random.choices(self.type_array, k=4)
         self.player_array = [gray, gray, gray, gray]
 
-    def print_array(self, step):
+    def print_array(self, level):
 
         p = 400
 
@@ -46,37 +47,52 @@ class Types():
         p = 400
 
         for x in self.player_array:
-            pygame.draw.circle(screen, x, (p, 300), 10)
+            pygame.draw.circle(screen, x, (p, 300 + (20 * level)), 10)
             p += 50
 
     def change_coloru(self, position):
 
         if position[0] >= 390 and position[0] <= 410:
             if position[1] >= 290 and position[1] <= 310:
-                pygame.draw.circle(screen, red, (400, 300), 10)
 
+                pygame.draw.circle(screen, self.type_array[self.type_idx], (400, 300), 10)
+                self.type_idx = self.type_idx + 1 if self.type_idx < 4 else 0
+
+    def check_end_round(self, position):
+        if position[0] >= 50 and position[0] <= 70:
+            if position[1] >= 50 and position[1] <= 70:
+                return True
 
 class Game():
 
     def __init__(self):
 
-
+        self.level = 0
+        self.step = 0
         self.t = Types()
         self.game_loop()
 
     def game_loop(self):
 
+        screen.fill(white)
+
+        pygame.draw.rect(screen, red, (50, 50, 20, 20))
         while True:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.state = 3
                     return None
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.t.change_coloru(pygame.mouse.get_pos())
+                    if self.t.check_end_round(pygame.mouse.get_pos()):
+                        self.level += 1
 
-            screen.fill(white)
-            self.t.print_array(3)
-            self.t.change_coloru(pygame.mouse.get_pos())
+            if self.step == self.level:
+                self.t.print_array(self.level)
+                self.step += 1
+
             pygame.display.update()
-            print(pygame.mouse.get_pos())
+            print(pygame.mouse.get_pressed())
 
 Game()
