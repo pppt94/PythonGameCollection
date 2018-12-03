@@ -25,9 +25,11 @@ class Types():
 
     def __init__(self):
 
-        self.type_array = [black, orange, red, green, blue, gold]
+        self.type_array = [pygame.image.load('Graphics/list.png'), pygame.image.load('Graphics/int.png'),
+                           pygame.image.load('Graphics/float.png'), pygame.image.load('Graphics/complex.png'),
+                           pygame.image.load('Graphics/tuple.png'), pygame.image.load('Graphics/string.png')]
         self.game_array = []
-        self.player_array = []
+        self.player_array = [None, None, None, None]
         self.result_array = []
         self.type_idx = 0
         self.fill_arrays()
@@ -35,27 +37,21 @@ class Types():
     def fill_arrays(self):
 
         self.game_array = random.choices(self.type_array, k=4)
-        self.player_array = [gray, gray, gray, gray]
+        #self.player_array = [gray, gray, gray, gray]
 
-    def print_array(self, level):
+    def print_game_array(self):
 
-        p = 400
+        p = 100
 
         for x in self.game_array:
-            pygame.draw.circle(screen, x, (p, 600), 10)
-            p+=50
-
-        p = 400
-
-        for x in self.player_array:
-            pygame.draw.circle(screen, x, (p, 300 + (20 * level)), 10)
-            p += 50
+            screen.blit(x, (p, 100))
+            p += 60
 
     def check_change_coloru(self, position, level):
 
         column = 0
-        dimensiony = 640 - (80 * level)
-        for i in range(380, 620, 60):
+        dimensiony = 643 - (78 * level)
+        for i in range(386, 626, 60):
             self.change_colour(position, i, dimensiony, column)
             column += 1
 
@@ -64,10 +60,13 @@ class Types():
 
         if position[0] >= dimensionx and position[0] <= dimensionx + 55:
             if position[1] >= dimensiony and position[1] <= dimensiony + 55 :
-                print(column)
-                pygame.draw.circle(screen, self.type_array[self.type_idx], (dimensionx, dimensiony), 10)
+
+                screen.blit(self.type_array[self.type_idx], (dimensionx, dimensiony))
+
                 self.player_array[column] = self.type_array[self.type_idx]
+
                 self.type_idx = self.type_idx + 1 if self.type_idx <= 4 else 0
+
         return None
 
 
@@ -97,8 +96,10 @@ class Game():
 
     def game_loop(self):
 
-        pygame.draw.rect(screen, red, (50, 50, 20, 20))
+
+        self.t.print_game_array()
         screen.blit(self.menu, (0, 0))
+        pygame.draw.rect(screen, red, (50, 50, 20, 20))
         while True:
 
             for event in pygame.event.get():
@@ -106,13 +107,12 @@ class Game():
                     self.state = 3
                     return None
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    screen.blit(self.list, (386, 643))
                     self.t.check_change_coloru(pygame.mouse.get_pos(), self.level)
                     if self.t.check_end_round(pygame.mouse.get_pos()):
                         self.level += 1
 
             if self.step == self.level:
-                self.t.print_array(self.level)
+                self.t.print_game_array()
                 self.step += 1
 
 
