@@ -50,13 +50,23 @@ class Types():
             pygame.draw.circle(screen, x, (p, 300 + (20 * level)), 10)
             p += 50
 
-    def change_coloru(self, position):
+    def check_change_coloru(self, position, level):
 
-        if position[0] >= 390 and position[0] <= 410:
-            if position[1] >= 290 and position[1] <= 310:
+        column = 0
+        dimensiony = 300 + (20 * level)
+        for i in range(400, 650, 50):
+            self.change_colour(position, i, dimensiony, column)
+            column += 1
 
-                pygame.draw.circle(screen, self.type_array[self.type_idx], (400, 300), 10)
-                self.type_idx = self.type_idx + 1 if self.type_idx < 4 else 0
+    def change_colour(self, position, dimensionx, dimensiony, column):
+
+        if position[0] >= dimensionx - 10 and position[0] <= dimensionx + 10:
+            if position[1] >= dimensiony - 10 and position[1] <= dimensiony + 10:
+
+                pygame.draw.circle(screen, self.type_array[self.type_idx], (dimensionx, dimensiony), 10)
+                self.player_array[column] = self.type_array[self.type_idx]
+                self.type_idx = self.type_idx + 1 if self.type_idx <= 4 else 0
+
 
     def check_end_round(self, position):
         if position[0] >= 50 and position[0] <= 70:
@@ -84,7 +94,7 @@ class Game():
                     self.state = 3
                     return None
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.t.change_coloru(pygame.mouse.get_pos())
+                    self.t.check_change_coloru(pygame.mouse.get_pos(), self.level)
                     if self.t.check_end_round(pygame.mouse.get_pos()):
                         self.level += 1
 
