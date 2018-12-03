@@ -118,4 +118,4 @@ class Game():
 
             pygame.display.update()
 
-Game()
+#Game()
