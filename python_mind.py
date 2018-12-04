@@ -33,8 +33,8 @@ class Types():
         self.black_img = pygame.image.load('Graphics/black.png')
         self.gray_img = pygame.image.load('Graphics/gray.png')
         self.game_array = []
-        self.player_array = [None, None, None, None]
-        self.result_array = [None, None, None, None]
+        self.player_array = [0, 0, 0, 0]
+        self.result_array = []
         self.type_idx = 0
         self.fill_arrays()
 
@@ -90,17 +90,20 @@ class Types():
         for i in range(0, 4):
             if self.player_array[i] in temp_array:
                 self.result_array.append(self.white_img)
-                temp_array[i] = None
+                idx = temp_array.index(self.player_array[i])
+                temp_array[idx] = None
 
         while len(self.result_array) < 4:
             self.result_array.append(self.gray_img)
 
-        return None
+        self.player_array = [0, 0, 0, 0]
+
+
     def print_result(self, level):
 
         screen.blit(self.result_img, (655, 635 - (78 * level)))
         if level >= 1:
-            screen.blit(self.result_array[1], (666, 646 - (78 * (level-1))))
+            screen.blit(self.result_array[0], (666, 646 - (78 * (level-1))))
             screen.blit(self.result_array[1], (692, 646 - (78 * (level-1))))
             screen.blit(self.result_array[2], (666, 676 - (78 * (level-1))))
             screen.blit(self.result_array[3], (692, 676 - (78 * (level-1))))
@@ -134,7 +137,6 @@ class Game():
                         self.level += 1
                         self.t.compare_array()
                         self.t.print_result(self.level)
-
             pygame.display.update()
 
 Game()
