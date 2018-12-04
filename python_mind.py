@@ -95,14 +95,16 @@ class Types():
         while len(self.result_array) < 4:
             self.result_array.append(self.gray_img)
 
-
+        return None
     def print_result(self, level):
 
         screen.blit(self.result_img, (655, 635 - (78 * level)))
-        screen.blit(self.result_array[1], (666, 647 - (78 * level)))
-        screen.blit(self.result_array[1], (692, 647 - (78 * level)))
-        screen.blit(self.result_array[2], (666, 677 - (78 * level)))
-        screen.blit(self.result_array[3], (692, 677 - (78 * level)))
+        if level >= 1:
+            screen.blit(self.result_array[1], (666, 646 - (78 * (level-1))))
+            screen.blit(self.result_array[1], (692, 646 - (78 * (level-1))))
+            screen.blit(self.result_array[2], (666, 676 - (78 * (level-1))))
+            screen.blit(self.result_array[3], (692, 676 - (78 * (level-1))))
+            pygame.display.update()
 
 
 class Game():
@@ -110,20 +112,18 @@ class Game():
     def __init__(self):
 
         self.menu = pygame.image.load('Graphics/mind02.png')
-        self.list = pygame.image.load('Graphics/list.png')
         self.level = 0
-        self.step = 0
         self.t = Types()
         self.game_loop()
 
     def game_loop(self):
 
-
-        self.t.print_game_array()
         screen.blit(self.menu, (0, 0))
+        self.t.print_game_array()
         pygame.draw.rect(screen, red, (50, 50, 20, 20))
-        while True:
+        self.t.print_result(self.level)
 
+        while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.state = 3
@@ -132,15 +132,8 @@ class Game():
                     self.t.check_change_coloru(pygame.mouse.get_pos(), self.level)
                     if self.t.check_end_round(pygame.mouse.get_pos()):
                         self.level += 1
-
-            print (self.t.result_array)
-
-            if self.step == self.level:
-                self.t.print_game_array()
-                self.t.compare_array()
-                self.t.print_result(self.level)
-                self.step += 1
-
+                        self.t.compare_array()
+                        self.t.print_result(self.level)
 
             pygame.display.update()
 
