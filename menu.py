@@ -30,6 +30,7 @@ class Menu():
         self.menu_pytris = pygame.image.load('Graphics/menu_pytris.png')
         self.menu_mind = pygame.image.load('Graphics/menu_mind.png')
         self.game_mind = python_mind.Game()
+        self.game_snake = snake.Game()
         self.menu_loop()
 
     def menu_loop(self):
@@ -52,7 +53,7 @@ class Menu():
                             self.select = "Master"
                     elif event.key == pygame.K_RETURN:
                         if self.select == "Snake":
-                            snake.Game()
+                            self.game_snake.game_loop()
                         elif self.select == "Master":
                             self.game_mind.game_loop()
 

@@ -161,6 +161,10 @@ class Game():
                             self.state = 4
                             return None
 
+
+            if self.level >= 9:
+                self.state = 0
+                return None
             pygame.display.update()
 
 
