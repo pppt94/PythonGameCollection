@@ -72,12 +72,6 @@ class Types():
 
         return None
 
-
-    def check_end_round(self, position):
-        if position[0] >= 50 and position[0] <= 70:
-            if position[1] >= 50 and position[1] <= 70:
-                return True
-
     def compare_array(self):
 
         self.result_array.clear()
@@ -116,14 +110,28 @@ class Game():
 
         self.menu = pygame.image.load('Graphics/mind02.png')
         self.level = 0
+        self.state = 0
         self.t = Types()
         self.game_loop()
 
     def game_loop(self):
 
+        while True:
+            if self.state == 0:
+                self.start_game()
+            elif self.state == 1:
+                self.game_over()
+            elif self.state == 2:
+                self.game_succes()
+            elif self.state == 3:
+                self.help_game()
+            elif self.state == 4:
+                self.game_exit();
+
+    def game_loop(self):
+
         screen.blit(self.menu, (0, 0))
         self.t.print_game_array()
-        pygame.draw.rect(screen, red, (50, 50, 20, 20))
         self.t.print_result(self.level)
 
         while True:
@@ -133,10 +141,26 @@ class Game():
                     return None
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.t.check_change_coloru(pygame.mouse.get_pos(), self.level)
-                    if self.t.check_end_round(pygame.mouse.get_pos()):
-                        self.level += 1
-                        self.t.compare_array()
-                        self.t.print_result(self.level)
+                    self.check_buttons(pygame.mouse.get_pos())
+
             pygame.display.update()
+
+    def check_end_round(self, position):
+
+        if position[0] >= 170 and position[0] <= 315:
+            if position[1] >= 380 and position[1] <= 490:
+                return True
+
+    def check_buttons(self, position):
+
+        if position[0] >= 170 and position[0] <= 315:
+            if position[1] >= 380 and position[1] <= 490:
+                self.level += 1
+                self.t.compare_array()
+                self.t.print_result(self.level)
+        elif position[0] >= 130 and position[0] <= 275:
+            if position[1] >= 25 and position[1] <= 160:
+                self.state = 1
+
 
 Game()
