@@ -112,7 +112,7 @@ class Game():
         self.level = 0
         self.state = 0
         self.t = Types()
-        self.game_loop()
+        #self.game_loop()
 
     def game_loop(self):
 
@@ -126,12 +126,17 @@ class Game():
             elif self.state == 3:
                 self.help_game()
             elif self.state == 4:
-                self.game_exit();
+                self.state = 0
+                return None
 
-    def game_loop(self):
+    def start_game(self):
 
+        self.level = 0
+        self.state = 0
+        self.t = Types()
         screen.blit(self.menu, (0, 0))
-        self.t.print_game_array()
+        # SHOW
+        #self.t.print_game_array()
         self.t.print_result(self.level)
 
         while True:
@@ -141,26 +146,24 @@ class Game():
                     return None
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.t.check_change_coloru(pygame.mouse.get_pos(), self.level)
-                    self.check_buttons(pygame.mouse.get_pos())
+                    position = pygame.mouse.get_pos()
+                    if position[0] >= 170 and position[0] <= 315:
+                        if position[1] >= 380 and position[1] <= 490:
+                            self.level += 1
+                            self.t.compare_array()
+                            self.t.print_result(self.level)
+                    if position[0] >= 130 and position[0] <= 275:
+                        if position[1] >= 25 and position[1] <= 170:
+                            self.state = 0
+                            return None
+                    if position[0] >= 30 and position[0] <= 215:
+                        if position[1] >= 515 and position[1] <= 680:
+                            self.state = 4
+                            return None
 
             pygame.display.update()
 
-    def check_end_round(self, position):
-
-        if position[0] >= 170 and position[0] <= 315:
-            if position[1] >= 380 and position[1] <= 490:
-                return True
-
-    def check_buttons(self, position):
-
-        if position[0] >= 170 and position[0] <= 315:
-            if position[1] >= 380 and position[1] <= 490:
-                self.level += 1
-                self.t.compare_array()
-                self.t.print_result(self.level)
-        elif position[0] >= 130 and position[0] <= 275:
-            if position[1] >= 25 and position[1] <= 160:
-                self.state = 1
 
 
-Game()
+
+#Game()

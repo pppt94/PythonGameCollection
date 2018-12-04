@@ -29,6 +29,7 @@ class Menu():
         self.menu_eater = pygame.image.load('Graphics/menu_eater.png')
         self.menu_pytris = pygame.image.load('Graphics/menu_pytris.png')
         self.menu_mind = pygame.image.load('Graphics/menu_mind.png')
+        self.game_mind = python_mind.Game()
         self.menu_loop()
 
     def menu_loop(self):
@@ -53,7 +54,7 @@ class Menu():
                         if self.select == "Snake":
                             snake.Game()
                         elif self.select == "Master":
-                            python_mind.Game()
+                            self.game_mind.game_loop()
 
             screen.blit(self.menu_pytris, (0, 0))
 
