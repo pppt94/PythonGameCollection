@@ -163,9 +163,28 @@ class Game():
 
 
             if self.level >= 9:
-                self.state = 0
+                self.state = 1
                 return None
             pygame.display.update()
+
+    def game_over(self):
+
+        screen.fill(white)
+        self.t.print_game_array()
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.state = 0
+                        return None
+                    if event.key == pygame.K_ESCAPE:
+                        self.state = 4
+                        return None
+                if event.type == pygame.QUIT:
+                    self.state = 4
+                    return None
 
 
 
