@@ -28,16 +28,20 @@ class Types():
         self.type_array = [pygame.image.load('Graphics/list.png'), pygame.image.load('Graphics/int.png'),
                            pygame.image.load('Graphics/float.png'), pygame.image.load('Graphics/complex.png'),
                            pygame.image.load('Graphics/tuple.png'), pygame.image.load('Graphics/string.png')]
+        self.result_img = pygame.image.load('Graphics/result.png')
+        self.white_img = pygame.image.load('Graphics/white.png')
+        self.black_img = pygame.image.load('Graphics/black.png')
+        self.gray_img = pygame.image.load('Graphics/gray.png')
         self.game_array = []
         self.player_array = [None, None, None, None]
-        self.result_array = []
+        self.result_array = [None, None, None, None]
         self.type_idx = 0
         self.fill_arrays()
 
     def fill_arrays(self):
 
         self.game_array = random.choices(self.type_array, k=4)
-        #self.player_array = [gray, gray, gray, gray]
+
 
     def print_game_array(self):
 
@@ -56,7 +60,6 @@ class Types():
             column += 1
 
     def change_colour(self, position, dimensionx, dimensiony, column):
-        print(pygame.mouse.get_pos(), dimensiony)
 
         if position[0] >= dimensionx and position[0] <= dimensionx + 55:
             if position[1] >= dimensiony and position[1] <= dimensiony + 55 :
@@ -77,10 +80,29 @@ class Types():
 
     def compare_array(self):
 
+        self.result_array.clear()
+        temp_array = self.game_array.copy()
         for i in range(0, 4):
-            if self.game_array[i] == self.player_array[i]:
-                self.result_array.append(1)
+            if self.player_array[i] == temp_array[i]:
+                self.result_array.append(self.black_img)
+                temp_array[i] = None
 
+        for i in range(0, 4):
+            if self.player_array[i] in temp_array:
+                self.result_array.append(self.white_img)
+                temp_array[i] = None
+
+        while len(self.result_array) < 4:
+            self.result_array.append(self.gray_img)
+
+
+    def print_result(self, level):
+
+        screen.blit(self.result_img, (655, 635 - (78 * level)))
+        screen.blit(self.result_array[1], (666, 647 - (78 * level)))
+        screen.blit(self.result_array[1], (692, 647 - (78 * level)))
+        screen.blit(self.result_array[2], (666, 677 - (78 * level)))
+        screen.blit(self.result_array[3], (692, 677 - (78 * level)))
 
 
 class Game():
@@ -111,11 +133,15 @@ class Game():
                     if self.t.check_end_round(pygame.mouse.get_pos()):
                         self.level += 1
 
+            print (self.t.result_array)
+
             if self.step == self.level:
                 self.t.print_game_array()
+                self.t.compare_array()
+                self.t.print_result(self.level)
                 self.step += 1
 
 
             pygame.display.update()
 
-#Game()
+Game()
