@@ -9,7 +9,7 @@ scr_width = 880
 scr_height = 720
 screen = pygame.display.set_mode((scr_width, scr_height))
 pygame.display.set_caption('Python Mind')
-fps = 5
+fps = 9
 
 #define colours
 black = (0, 0, 0)
@@ -178,9 +178,11 @@ class Game():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.state = 0
+                        screen.fill(black)
                         return None
                     if event.key == pygame.K_ESCAPE:
                         self.state = 4
+                        screen.fill(black)
                         return None
                 if event.type == pygame.QUIT:
                     self.state = 4

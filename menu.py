@@ -9,7 +9,7 @@ clock = pygame.time.Clock()
 #define screen
 screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 pygame.display.set_caption('Main Menu')
-fps = 5
+fps = 9
 
 #define colours
 black = (0, 0, 0)
