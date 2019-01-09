@@ -1,5 +1,6 @@
 import pygame
 import snake
+import python_mind
 import text
 
 pygame.init()
@@ -28,6 +29,8 @@ class Menu():
         self.menu_eater = pygame.image.load('Graphics/menu_eater.png')
         self.menu_pytris = pygame.image.load('Graphics/menu_pytris.png')
         self.menu_mind = pygame.image.load('Graphics/menu_mind.png')
+        self.game_mind = python_mind.Game()
+        self.game_snake = snake.Game()
         self.menu_loop()
 
     def menu_loop(self):
@@ -50,7 +53,9 @@ class Menu():
                             self.select = "Master"
                     elif event.key == pygame.K_RETURN:
                         if self.select == "Snake":
-                            snake.Game()
+                            self.game_snake.game_loop()
+                        elif self.select == "Master":
+                            self.game_mind.game_loop()
 
             screen.blit(self.menu_pytris, (0, 0))
 

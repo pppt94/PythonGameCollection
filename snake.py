@@ -236,7 +236,7 @@ class Game():
         self.state = 0
         self.back = pygame.image.load('Graphics/back.png')
         self.menu_back = pygame.image.load('Graphics/menu.png')
-        self.game_loop()
+        #self.game_loop()
         self.score = " "
 
     def game_loop(self):
@@ -249,7 +249,8 @@ class Game():
             elif self.state == 2:
                 self.game_over()
             elif self.state == 3:
-                self.game_exit()
+                self.state = 0
+                return None
             elif self.state == 4:
                 self.help_game()
 
@@ -452,8 +453,5 @@ class Game():
                     if event.key == pygame.K_SPACE:
                         return None
 
-    def game_exit(self):
-        pygame.quit()
-        quit()
 
 #Game()
