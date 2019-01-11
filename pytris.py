@@ -10,6 +10,9 @@ scr_height = 720
 screen = pygame.display.set_mode((scr_width, scr_height))
 pygame.display.set_caption('Error Eater')
 fps = 5
+block_size = 30
+x_cor = 290
+y_cor = 60
 
 #define colours
 black = (0, 0, 0)
@@ -21,14 +24,17 @@ gold = (255, 215, 0)
 orange = (255, 120, 0)
 gray = (128, 128, 128)
 
-class Blocks():
+shapes = ['S', 'Z', 'I', 'O', 'L', 'T']
+colors = [red, green, blue, gold, orange, gray]
 
-    def __init__(self, x, y, shape):
+class Block():
+
+    def __init__(self, x, y):
 
         self.x = x
         self.y = y
-        self.shape = shape
-        self.color = []
+        self.shape = random.choice(shapes)
+        self.color = colors[shapes.index(self.shape)]
         self.rotation = 0
 
 class Board():
@@ -50,6 +56,13 @@ class Board():
 
         return self.grid
 
+    def draw_grid(self):
+
+        for i in range(len(self.grid)):
+            pygame.draw.line(screen, (128, 128, 128), (x_cor, y_cor+i*block_size), (x_cor+300, y_cor+i*block_size))
+            for j in range(len(self.grid[i])):
+                pygame.draw.line(screen, (128, 128, 128), (x_cor+j*block_size, y_cor), (x_cor+j*block_size, y_cor+600))
+
 class Game():
 
     def __init__(self):
@@ -70,6 +83,10 @@ class Game():
 
     def start_game(self):
 
+        board = Board()
+        curr_piece = Block(5, 0)
+        next_piece = Block(5, 0)
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -77,10 +94,15 @@ class Game():
                     return None
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
-                        pass
+                        curr_piece.x += 1
                     elif event.key == pygame.K_LEFT:
-                        pass
+                        curr_piece.x -= 1
                     elif event.key == pygame.K_DOWN:
-                        pass
+                        curr_piece.y += 1
                     elif event.key == pygame.K_SPACE:
-                        pass
+                        curr_piece.rotation += 1
+
+            screen.fill(white)
+            board.create_grid()
+            board.draw_grid()
+            pygame.display.update()
