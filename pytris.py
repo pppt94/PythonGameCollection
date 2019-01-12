@@ -114,9 +114,12 @@ class Game():
 
     def start_game(self):
 
+        change_piece = False
         board = Board()
         curr_piece = Block(5, 0)
         next_piece = Block(5, 0)
+        fall_time = 0
+        fall_speed = 0.27
 
         while True:
             for event in pygame.event.get():
@@ -133,7 +136,33 @@ class Game():
                     elif event.key == pygame.K_SPACE:
                         curr_piece.rotation += 1
 
-            screen.fill(white)
+
             board.create_grid()
+            fall_time += clock.get_rawtime()
+            clock.tick()
+
+            if fall_time / 100 > fall_speed:
+                fall_time = 0
+                curr_piece.y += 1
+                if not (board.check_space(curr_piece)) and curr_piece.y < 0:
+                    curr_piece.y -= 1
+                    change_piece = True
+
+            curr_piece_position = curr_piece.convert_shape()
+
+            for i in range(len(curr_piece_position)):
+                x, y = curr_piece_position[i]
+                if y > -1:
+                    board.grid[y][x] = curr_piece.color
+
+            if change_piece:
+                for i in curr_piece_position:
+                    pos = (i[0], i[1])
+                    board.blocks_positions[pos] = curr_piece.color
+                curr_piece = next_piece
+                next_piece = Block(5, 0)
+                change_piece = False
+
+            screen.fill(white)
             board.draw_grid()
             pygame.display.update()
