@@ -244,12 +244,20 @@ class Game():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
                         curr_piece.x += 1
+                        if not board.check_space(curr_piece):
+                            curr_piece.x -= 1
                     elif event.key == pygame.K_LEFT:
                         curr_piece.x -= 1
+                        if not board.check_space(curr_piece):
+                            curr_piece.x += 1
                     elif event.key == pygame.K_DOWN:
                         curr_piece.y += 1
+                        if not board.check_space(curr_piece):
+                            curr_piece.y -= 1
                     elif event.key == pygame.K_SPACE:
                         curr_piece.rotation += 1
+                        if not board.check_space(curr_piece):
+                            curr_piece.rotation -= 1
 
             fall_time += clock.get_rawtime()
             clock.tick()
