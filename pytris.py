@@ -151,7 +151,7 @@ class Block():
         for i, line in enumerate(format):
             row = list(line)
             for j, column in enumerate(row):
-                if column == '0':
+                if column == 'X':
                     positions.append((self.x + j, self.y + i))
 
         for i, pos in enumerate(positions):
@@ -185,6 +185,11 @@ class Board():
             for j in range(len(self.grid[i])):
                 pygame.draw.line(screen, (128, 128, 128), (x_cor+j*block_size, y_cor), (x_cor+j*block_size, y_cor+600))
 
+    def draw_board(self):
+
+        for i in range(len(self.grid)):
+            for j in range(len(self.grid[i])):
+                pygame.draw.rect(screen, self.grid[i][j], (x_cor+j*block_size, y_cor+i*block_size, block_size, block_size), 0)
 
     def check_space(self, shape):
 
@@ -230,6 +235,7 @@ class Game():
         fall_time = 0
         fall_speed = 0.27
 
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -245,23 +251,25 @@ class Game():
                     elif event.key == pygame.K_SPACE:
                         curr_piece.rotation += 1
 
-
-            board.create_grid()
             fall_time += clock.get_rawtime()
             clock.tick()
 
-            if fall_time / 100 > fall_speed:
+            if fall_time / 1000 > fall_speed:
                 fall_time = 0
                 curr_piece.y += 1
-                if not (board.check_space(curr_piece)) and curr_piece.y < 0:
+                if not (board.check_space(curr_piece)) and curr_piece.y > 0:
                     curr_piece.y -= 1
                     change_piece = True
 
             curr_piece_position = curr_piece.convert_shape()
 
+
+
+
             for i in range(len(curr_piece_position)):
                 x, y = curr_piece_position[i]
                 if y > -1:
+                    print('aa')
                     board.grid[y][x] = curr_piece.color
 
             if change_piece:
@@ -273,5 +281,8 @@ class Game():
                 change_piece = False
 
             screen.fill(white)
+
+            board.draw_board()
+            board.create_grid()
             board.draw_grid()
             pygame.display.update()
