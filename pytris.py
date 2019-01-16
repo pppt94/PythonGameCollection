@@ -191,6 +191,16 @@ class Board():
             for j in range(len(self.grid[i])):
                 pygame.draw.rect(screen, self.grid[i][j], (x_cor+j*block_size, y_cor+i*block_size, block_size, block_size), 0)
 
+    def draw_next_shape(self, shape):
+
+        format = shape.shape[shape.rotation % len(shape.shape)]
+
+        for i, line in enumerate(format):
+            row = list(line)
+            for j, column in enumerate(row):
+                if column == 'X':
+                    pygame.draw.rect(screen, shape.color, (x_cor+400 +j*block_size, y_cor+100+i*block_size, block_size, block_size), 0)
+
     def check_space(self, shape):
 
         free_position = []
@@ -214,6 +224,26 @@ class Board():
             if y < 1:
                 return True
         return False
+
+    def check_row(self):
+
+        rows = 0
+
+        for i in range(len(self.grid)-1, -1, -1):
+            row = self.grid[i]
+            if (0, 0, 0) not in row:
+                rows += 1
+                level = i
+                for j in range(len(row)):
+                    try:
+                        del self.blocks_positions[(j, i)]
+                    except:
+                        continue
+        if rows > 0:
+            for x, y in sorted(list(self.blocks_positions))[::-1]:
+                if y < level:
+                    new_pos = (x, y + rows)
+                    self.blocks_positions[new_pos] = self.blocks_positions.pop((x, y))
 
 class Game():
 
@@ -241,7 +271,6 @@ class Game():
         next_piece = Block(5, 0)
         fall_time = 0
         fall_speed = 0.27
-
 
         while True:
             for event in pygame.event.get():
@@ -294,6 +323,7 @@ class Game():
                 curr_piece = next_piece
                 next_piece = Block(5, 0)
                 change_piece = False
+                board.check_row()
 
             if board.check_full():
                 self.state = 1
@@ -304,4 +334,5 @@ class Game():
             board.draw_board()
             board.create_grid()
             board.draw_grid()
+            board.draw_next_shape(next_piece)
             pygame.display.update()
