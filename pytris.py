@@ -1,5 +1,6 @@
 import pygame
 import random
+import text
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -12,7 +13,7 @@ pygame.display.set_caption('Error Eater')
 fps = 5
 block_size = 30
 x_cor = 290
-y_cor = 60
+y_cor = 90
 
 #define colours
 black = (0, 0, 0)
@@ -180,9 +181,9 @@ class Board():
 
     def draw_grid(self):
 
-        for i in range(len(self.grid)):
+        for i in range(1, len(self.grid)):
             pygame.draw.line(screen, (128, 128, 128), (x_cor, y_cor+i*block_size), (x_cor+300, y_cor+i*block_size))
-            for j in range(len(self.grid[i])):
+            for j in range(1, len(self.grid[i])):
                 pygame.draw.line(screen, (128, 128, 128), (x_cor+j*block_size, y_cor), (x_cor+j*block_size, y_cor+600))
 
     def draw_board(self):
@@ -199,7 +200,7 @@ class Board():
             row = list(line)
             for j, column in enumerate(row):
                 if column == 'X':
-                    pygame.draw.rect(screen, shape.color, (x_cor+400 +j*block_size, y_cor+100+i*block_size, block_size, block_size), 0)
+                    pygame.draw.rect(screen, shape.color, (660 +j*block_size, 200+i*block_size, block_size, block_size), 0)
 
     def check_space(self, shape):
 
@@ -245,10 +246,15 @@ class Board():
                     new_pos = (x, y + rows)
                     self.blocks_positions[new_pos] = self.blocks_positions.pop((x, y))
 
+        return rows * 10
+
 class Game():
 
     def __init__(self):
+        self.menu = pygame.image.load('Graphics/pytris_menu.png')
         self.state = 0
+        self.score = 0
+
 
     def game_loop(self):
 
@@ -313,7 +319,6 @@ class Game():
             for i in range(len(curr_piece_position)):
                 x, y = curr_piece_position[i]
                 if y > -1:
-                    print('aa')
                     board.grid[y][x] = curr_piece.color
 
             if change_piece:
@@ -323,16 +328,17 @@ class Game():
                 curr_piece = next_piece
                 next_piece = Block(5, 0)
                 change_piece = False
-                board.check_row()
+                self.score += board.check_row()
 
             if board.check_full():
                 self.state = 1
                 return None
 
-            screen.fill(white)
-
+            screen.fill(black)
             board.draw_board()
             board.create_grid()
             board.draw_grid()
             board.draw_next_shape(next_piece)
+            text.Text(str(self.score), red, (735, 545), 100).print_text()
+            screen.blit(self.menu, (0, 0))
             pygame.display.update()
