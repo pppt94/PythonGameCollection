@@ -208,6 +208,13 @@ class Board():
 
         return True
 
+    def check_full(self):
+
+        for x, y in self.blocks_positions:
+            if y < 1:
+                return True
+        return False
+
 class Game():
 
     def __init__(self):
@@ -287,6 +294,10 @@ class Game():
                 curr_piece = next_piece
                 next_piece = Block(5, 0)
                 change_piece = False
+
+            if board.check_full():
+                self.state = 1
+                return None
 
             screen.fill(white)
 
