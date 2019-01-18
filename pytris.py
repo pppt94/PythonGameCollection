@@ -271,6 +271,7 @@ class Game():
 
     def start_game(self):
 
+        self.score = 0
         change_piece = False
         board = Board()
         curr_piece = Block(5, 0)
@@ -300,6 +301,21 @@ class Game():
                         curr_piece.rotation += 1
                         if not board.check_space(curr_piece):
                             curr_piece.rotation -= 1
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    position = pygame.mouse.get_pos()
+                    if position[0] >= 55 and position[0] <= 205:
+                        if position[1] >= 15 and position[1] <= 165:
+                            self.state = 2
+                            return None
+                        elif position[1] >= 195 and position[1] <= 345:
+                            return None
+                        elif position[1] >= 375 and position[1] <= 525:
+                            self.state = 0
+                            return None
+                        elif position[1] >= 555 and position[1] <= 705:
+                            self.state = 3
+                            return None
 
             fall_time += clock.get_rawtime()
             clock.tick()
