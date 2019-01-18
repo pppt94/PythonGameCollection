@@ -329,9 +329,6 @@ class Game():
 
             curr_piece_position = curr_piece.convert_shape()
 
-
-
-
             for i in range(len(curr_piece_position)):
                 x, y = curr_piece_position[i]
                 if y > -1:
@@ -344,7 +341,10 @@ class Game():
                 curr_piece = next_piece
                 next_piece = Block(5, 0)
                 change_piece = False
-                self.score += board.check_row()
+                inc = board.check_row()
+                self.score += inc
+                if inc > 0:
+                    fall_speed -= 0.01
 
             if board.check_full():
                 self.state = 1
