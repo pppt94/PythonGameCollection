@@ -252,6 +252,7 @@ class Game():
 
     def __init__(self):
         self.menu = pygame.image.load('Graphics/pytris_menu.png')
+        self.over = pygame.image.load('Graphics/pytris_over.png')
         self.state = 0
         self.score = 0
 
@@ -358,3 +359,21 @@ class Game():
             text.Text(str(self.score), red, (735, 545), 100).print_text()
             screen.blit(self.menu, (0, 0))
             pygame.display.update()
+
+    def game_over(self):
+
+        screen.blit(self.over, (0, 0))
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.state = 0
+                        return None
+                    if event.key == pygame.K_ESCAPE:
+                        self.state = 3
+                        return None
+                if event.type == pygame.QUIT:
+                    self.state = 3
+                    return None
