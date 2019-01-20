@@ -253,6 +253,7 @@ class Game():
     def __init__(self):
         self.menu = pygame.image.load('Graphics/pytris_menu.png')
         self.over = pygame.image.load('Graphics/pytris_over.png')
+        self.help = pygame.image.load('Graphics/pytris_help.png')
         self.state = 0
         self.score = 0
 
@@ -373,6 +374,21 @@ class Game():
                         return None
                     if event.key == pygame.K_ESCAPE:
                         self.state = 3
+                        return None
+                if event.type == pygame.QUIT:
+                    self.state = 3
+                    return None
+
+    def help_game(self):
+
+        screen.blit(self.help, (0, 0))
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.state = 0
                         return None
                 if event.type == pygame.QUIT:
                     self.state = 3
