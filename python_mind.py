@@ -110,6 +110,7 @@ class Game():
 
         self.menu = pygame.image.load('Graphics/mind02.png')
         self.over = pygame.image.load('Graphics/mind_over.png')
+        self.success = pygame.image.load('Graphics/mind_success.png')
         self.level = 0
         self.state = 0
         self.t = Types()
@@ -119,10 +120,8 @@ class Game():
         while True:
             if self.state == 0:
                 self.start_game()
-            elif self.state == 1:
-                self.game_over()
-            elif self.state == 2:
-                self.game_succes()
+            elif self.state == 1 or self.state == 2:
+                self.game_finish()
             elif self.state == 3:
                 self.help_game()
             elif self.state == 4:
@@ -169,28 +168,9 @@ class Game():
                 return None
             pygame.display.update()
 
-    def game_over(self):
+    def game_finish(self):
 
-        screen.blit(self.over, (0, 0))
-        self.t.print_game_array()
-        pygame.display.update()
-
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        self.state = 0
-                        return None
-                    if event.key == pygame.K_ESCAPE:
-                        self.state = 4
-                        return None
-                if event.type == pygame.QUIT:
-                    self.state = 4
-                    return None
-
-    def game_succes(self):
-
-        screen.fill(white)
+        screen.blit(self.over, (0, 0)) if self.state == 1 else screen.blit(self.success, (0, 0))
         self.t.print_game_array()
         pygame.display.update()
 
