@@ -111,6 +111,7 @@ class Game():
         self.menu = pygame.image.load('Graphics/mind02.png')
         self.over = pygame.image.load('Graphics/mind_over.png')
         self.success = pygame.image.load('Graphics/mind_success.png')
+        self.help = pygame.image.load('Graphics/mind_help.png')
         self.level = 0
         self.state = 0
         self.t = Types()
@@ -120,10 +121,8 @@ class Game():
         while True:
             if self.state == 0:
                 self.start_game()
-            elif self.state == 1 or self.state == 2:
-                self.game_finish()
-            elif self.state == 3:
-                self.help_game()
+            elif self.state >= 1 and self.state <= 3:
+                self.game_mode()
             elif self.state == 4:
                 self.state = 0
                 return None
@@ -141,7 +140,7 @@ class Game():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.state = 3
+                    self.state = 4
                     return None
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.t.check_change_coloru(pygame.mouse.get_pos(), self.level)
@@ -159,6 +158,10 @@ class Game():
                         if position[1] >= 515 and position[1] <= 680:
                             self.state = 4
                             return None
+                    if position[0] >= 20 and position[0] <= 142:
+                        if position[1] >= 340 and position[1] <= 460:
+                            self.state = 3
+                            return None
 
             if self.level >= 9:
                 self.state = 1
@@ -168,10 +171,17 @@ class Game():
                 return None
             pygame.display.update()
 
-    def game_finish(self):
+    def game_mode(self):
 
-        screen.blit(self.over, (0, 0)) if self.state == 1 else screen.blit(self.success, (0, 0))
-        self.t.print_game_array()
+        if self.state == 1:
+            screen.blit(self.over, (0, 0))
+            self.t.print_game_array()
+        elif self.state == 2:
+            screen.blit(self.success, (0, 0))
+            self.t.print_game_array()
+        else:
+            screen.blit(self.help, (0, 0))
+
         pygame.display.update()
 
         while True:
