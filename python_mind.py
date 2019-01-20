@@ -40,15 +40,15 @@ class Types():
 
     def fill_arrays(self):
 
-        self.game_array = random.choices(self.type_array, k=4)
+        self.game_array = random.sample(self.type_array, 4)
 
 
     def print_game_array(self):
 
-        p = 100
+        p = 290
 
         for x in self.game_array:
-            screen.blit(x, (p, 100))
+            screen.blit(x, (p, 290))
             p += 60
 
     def check_change_coloru(self, position, level):
@@ -109,22 +109,20 @@ class Game():
     def __init__(self):
 
         self.menu = pygame.image.load('Graphics/mind02.png')
+        self.over = pygame.image.load('Graphics/mind_over.png')
+        self.success = pygame.image.load('Graphics/mind_success.png')
+        self.help = pygame.image.load('Graphics/mind_help.png')
         self.level = 0
         self.state = 0
         self.t = Types()
-        #self.game_loop()
 
     def game_loop(self):
 
         while True:
             if self.state == 0:
                 self.start_game()
-            elif self.state == 1:
-                self.game_over()
-            elif self.state == 2:
-                self.game_succes()
-            elif self.state == 3:
-                self.help_game()
+            elif self.state >= 1 and self.state <= 3:
+                self.game_mode()
             elif self.state == 4:
                 self.state = 0
                 return None
@@ -142,7 +140,7 @@ class Game():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.state = 3
+                    self.state = 4
                     return None
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.t.check_change_coloru(pygame.mouse.get_pos(), self.level)
@@ -160,17 +158,30 @@ class Game():
                         if position[1] >= 515 and position[1] <= 680:
                             self.state = 4
                             return None
-
+                    if position[0] >= 20 and position[0] <= 142:
+                        if position[1] >= 340 and position[1] <= 460:
+                            self.state = 3
+                            return None
 
             if self.level >= 9:
                 self.state = 1
                 return None
+            if self.t.result_array == [self.t.black_img] * 4:
+                self.state = 2
+                return None
             pygame.display.update()
 
-    def game_over(self):
+    def game_mode(self):
 
-        screen.fill(white)
-        self.t.print_game_array()
+        if self.state == 1:
+            screen.blit(self.over, (0, 0))
+            self.t.print_game_array()
+        elif self.state == 2:
+            screen.blit(self.success, (0, 0))
+            self.t.print_game_array()
+        else:
+            screen.blit(self.help, (0, 0))
+
         pygame.display.update()
 
         while True:
@@ -185,8 +196,3 @@ class Game():
                 if event.type == pygame.QUIT:
                     self.state = 4
                     return None
-
-
-
-
-#Game()

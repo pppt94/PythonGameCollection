@@ -1,6 +1,7 @@
 import pygame
 import snake
 import python_mind
+import pytris
 import text
 
 pygame.init()
@@ -31,6 +32,7 @@ class Menu():
         self.menu_mind = pygame.image.load('Graphics/menu_mind.png')
         self.game_mind = python_mind.Game()
         self.game_snake = snake.Game()
+        self.game_tetris = pytris.Game()
         self.menu_loop()
 
     def menu_loop(self):
@@ -56,6 +58,8 @@ class Menu():
                             self.game_snake.game_loop()
                         elif self.select == "Master":
                             self.game_mind.game_loop()
+                        elif self.select == "Tetris":
+                            self.game_tetris.game_loop()
 
             screen.blit(self.menu_pytris, (0, 0))
 
