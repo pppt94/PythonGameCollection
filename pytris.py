@@ -360,8 +360,6 @@ class Game():
                 if inc > 0:
                     fall_speed -= 0.01
 
-            print(fall_speed)
-
             if board.check_full():
                 self.state = 1
                 return None
