@@ -256,6 +256,7 @@ class Game():
         self.help = pygame.image.load('Graphics/pytris_help.png')
         self.state = 0
         self.score = 0
+        self.pause = 0
 
 
     def game_loop(self):
@@ -303,6 +304,17 @@ class Game():
                         curr_piece.rotation += 1
                         if not board.check_space(curr_piece):
                             curr_piece.rotation -= 1
+                    elif event.key == pygame.K_p:
+                        self.pause = 1
+                        while self.pause == 1:
+                            for event in pygame.event.get():
+                                if event.type == pygame.QUIT:
+                                    self.state = 3
+                                    return None
+                                if event.type == pygame.KEYDOWN:
+                                    if event.key == pygame.K_p:
+                                        self.pause = 0
+                                        break
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
@@ -347,6 +359,8 @@ class Game():
                 self.score += inc
                 if inc > 0:
                     fall_speed -= 0.01
+
+            print(fall_speed)
 
             if board.check_full():
                 self.state = 1
