@@ -5,3 +5,8 @@ dist: xenial
 sudo: true
 install:
   - pip install -r requirements.txt
+  - pip install codecov
+  script:
+  - coverage run setup.py test
+  after_success:
+  - codecov
