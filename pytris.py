@@ -1,10 +1,9 @@
 import pygame
 import random
 import text
-import os
-os.environ“SDLVIDEODRIVER” = “dummy”
 
 pygame.init()
+pygame.display.init()
 clock = pygame.time.Clock()
 
 #define screen
