@@ -3,6 +3,7 @@ import random
 import text
 
 pygame.init()
+pygame.display.init()
 pygame.display.list_modes()
 clock = pygame.time.Clock()
 
