@@ -3,6 +3,7 @@ import random
 import text
 
 pygame.init()
+pygame.display.init()
 clock = pygame.time.Clock()
 
 #define screen
