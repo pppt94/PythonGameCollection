@@ -1,5 +1,5 @@
 from unittest import TestCase
-from pytris import Board, Block
+from Source.pytris import Board, Block
 
 
 class TestBoard(TestCase):

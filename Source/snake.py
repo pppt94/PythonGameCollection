@@ -1,6 +1,6 @@
 import pygame
 import random
-import text
+from Source import text
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -23,6 +23,16 @@ gold = (255, 215, 0)
 #define snake
 snake_size = 40
 
+#import graphics
+syn = pygame.image.load('../Graphics/food_syntax.png')
+imp = pygame.image.load('../Graphics/food_import.png')
+ind = pygame.image.load('../Graphics/food_index.png')
+nam = pygame.image.load('../Graphics/food_name.png')
+typ = pygame.image.load('../Graphics/food_type.png')
+
+foods = [imp, ind, nam, typ]
+
+
 class Snake():
 
     def __init__(self, snake_size):
@@ -33,13 +43,13 @@ class Snake():
         self.snake_body = []
         self.snake_length = 1
         self.head_direction = "UP"
-        self.head_img = pygame.image.load('Graphics/snake_head.png')
+        self.head_img = pygame.image.load('../Graphics/snake_head.png')
         self.head = self.head_img
-        self.body_img = pygame.image.load('Graphics/snake_body.png')
+        self.body_img = pygame.image.load('../Graphics/snake_body.png')
         self.body = self.body_img
-        self.curves_img = pygame.image.load('Graphics/snake_curves.png')
+        self.curves_img = pygame.image.load('../Graphics/snake_curves.png')
         self.curves = self.curves_img
-        self.tail_img = pygame.image.load('Graphics/snake_tail.png')
+        self.tail_img = pygame.image.load('../Graphics/snake_tail.png')
         self.tail = self.tail_img
 
     def update_position(self, inc_x, inc_y, direction):
@@ -157,44 +167,49 @@ class Food():
         self.bonus_food_x = None
         self.bonus_food_y = None
         self.food_size = 40
-        self.generate()
-        self.generate_bonus_food()
-        self.syn = pygame.image.load('Graphics/food_syntax.png')
-        self.imp = pygame.image.load('Graphics/food_import.png')
-        self.ind = pygame.image.load('Graphics/food_index.png')
-        self.nam = pygame.image.load('Graphics/food_name.png')
-        self.typ = pygame.image.load('Graphics/food_type.png')
-        self.current_food = self.imp
+        self.current_food = None
+        self.current_food = imp
 
 
-    def generate(self):
+    def generate(self, snake):
 
-        self.food_x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
-        self.food_y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
+        cord_list = [(i[0], i[1]) for i in snake.snake_body]
+        while(True):
+            x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
+            y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
+            if (x, y) not in cord_list:
+                break
+        self.food_x = x
+        self.food_y = y
 
-    def generate_bonus_food(self):
+    def generate_bonus_food(self, snake):
 
-        self.bonus_food_x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
-        self.bonus_food_y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
-
+        cord_list = [(i[0], i[1]) for i in snake.snake_body]
+        while(True):
+            x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
+            y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
+            if (x, y) not in cord_list:
+                break
+        self.bonus_food_x = x
+        self.bonus_food_y = y
 
     def draw_food(self):
 
+        if self.current_food is None:
+            self.current_food = imp
         screen.blit(self.current_food, (self.food_x, self.food_y))
 
     def draw_bonus_food(self):
 
-        screen.blit(self.syn, (self.bonus_food_x, self.bonus_food_y))
+        screen.blit(syn, (self.bonus_food_x, self.bonus_food_y))
 
-    def snake_eating(self, snake_x, snake_y, snake_size):
+    def snake_eating(self, snake_x, snake_y):
 
         if self.food_x == snake_x and self.food_y == snake_y:
-            self.current_food = random.choice([self.imp, self.ind, self.nam, self.typ])
-            self.generate()
+            self.current_food = random.choice(foods)
             return True
 
-
-    def snake_eating_bonus(self, snake_x, snake_y, snake_size):
+    def snake_eating_bonus(self, snake_x, snake_y):
 
         if self.bonus_food_x == snake_x and self.bonus_food_y == snake_y:
             return True
@@ -234,9 +249,8 @@ class Game():
     def __init__(self):
 
         self.state = 0
-        self.back = pygame.image.load('Graphics/back.png')
-        self.menu_back = pygame.image.load('Graphics/menu.png')
-        #self.game_loop()
+        self.back = pygame.image.load('../Graphics/back.png')
+        self.menu_back = pygame.image.load('../Graphics/menu.png')
         self.score = " "
 
     def game_loop(self):
@@ -256,7 +270,7 @@ class Game():
 
     def menu_game(self):
 
-        text_1 = text.Text("Error Eater", red, (scr_width / 2, scr_height / 2-100), 90)
+        text_1 = text.Text("Error Eater", red, (scr_width / 2, scr_height / 2 - 100), 90)
         text_2 = text.Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
         text_3 = text.Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 150), 40)
         text_4 = text.Text("Help", red, (scr_width / 2, scr_height / 2 + 100), 40)
@@ -341,11 +355,11 @@ class Game():
         inc_y = 0
         food = Food()
         snake = Snake(snake_size)
+        food.generate(snake)
+        food.generate_bonus_food(snake)
         score = Score()
         direction = None
         timer = 0
-
-
 
         while True:
             for event in pygame.event.get():
@@ -373,7 +387,6 @@ class Game():
                         self.game_pause()
 
 
-
             if snake.head_x >= scr_width or snake.head_x < 0 or snake.head_y >= scr_height or snake.head_y < 0:
                 self.state = 2
                 return None
@@ -386,17 +399,18 @@ class Game():
             snake.update_position(inc_x, inc_y, direction)
             screen.blit(self.back, (0, 0))
             snake.eating_food(food.food_x, food.food_y, food.bonus_food_x, food.bonus_food_y)
-            if food.snake_eating(snake.head_x, snake.head_y, snake.snake_size):
+            if food.snake_eating(snake.head_x, snake.head_y):
+                food.generate(snake)
                 score.update_score()
             if timer > 20:
-                if food.snake_eating_bonus(snake.head_x, snake.head_y, snake.snake_size):
+                if food.snake_eating_bonus(snake.head_x, snake.head_y):
                     score.update_score_special()
-                    food.generate_bonus_food()
+                    food.generate_bonus_food(snake)
                     timer = 0
                 if timer > 20:
                     food.draw_bonus_food()
                 if timer > 40:
-                    food.generate_bonus_food()
+                    food.generate_bonus_food(snake)
                     timer = 0
 
             snake.draw_snake()
@@ -452,6 +466,3 @@ class Game():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         return None
-
-
-#Game()

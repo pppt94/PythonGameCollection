@@ -1,8 +1,5 @@
 import pygame
-import snake
-import python_mind
-import pytris
-import text
+from Source import snake, pytris, python_mind
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -27,9 +24,9 @@ class Menu():
     def __init__(self):
 
         self.select = "Tetris"
-        self.menu_eater = pygame.image.load('Graphics/menu_eater.png')
-        self.menu_pytris = pygame.image.load('Graphics/menu_pytris.png')
-        self.menu_mind = pygame.image.load('Graphics/menu_mind.png')
+        self.menu_eater = pygame.image.load('../Graphics/menu_eater.png')
+        self.menu_pytris = pygame.image.load('../Graphics/menu_pytris.png')
+        self.menu_mind = pygame.image.load('../Graphics/menu_mind.png')
         self.game_mind = python_mind.Game()
         self.game_snake = snake.Game()
         self.game_tetris = pytris.Game()

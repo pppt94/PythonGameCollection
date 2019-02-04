@@ -25,13 +25,13 @@ class Types():
 
     def __init__(self):
 
-        self.type_array = [pygame.image.load('Graphics/list.png'), pygame.image.load('Graphics/int.png'),
-                           pygame.image.load('Graphics/float.png'), pygame.image.load('Graphics/complex.png'),
-                           pygame.image.load('Graphics/tuple.png'), pygame.image.load('Graphics/string.png')]
-        self.result_img = pygame.image.load('Graphics/result.png')
-        self.white_img = pygame.image.load('Graphics/white.png')
-        self.black_img = pygame.image.load('Graphics/black.png')
-        self.gray_img = pygame.image.load('Graphics/gray.png')
+        self.type_array = [pygame.image.load('../Graphics/list.png'), pygame.image.load('../Graphics/int.png'),
+                           pygame.image.load('../Graphics/float.png'), pygame.image.load('../Graphics/complex.png'),
+                           pygame.image.load('../Graphics/tuple.png'), pygame.image.load('../Graphics/string.png')]
+        self.result_img = pygame.image.load('../Graphics/result.png')
+        self.white_img = pygame.image.load('../Graphics/white.png')
+        self.black_img = pygame.image.load('../Graphics/black.png')
+        self.gray_img = pygame.image.load('../Graphics/gray.png')
         self.game_array = []
         self.player_array = [0, 0, 0, 0]
         self.result_array = []
@@ -108,10 +108,10 @@ class Game():
 
     def __init__(self):
 
-        self.menu = pygame.image.load('Graphics/mind02.png')
-        self.over = pygame.image.load('Graphics/mind_over.png')
-        self.success = pygame.image.load('Graphics/mind_success.png')
-        self.help = pygame.image.load('Graphics/mind_help.png')
+        self.menu = pygame.image.load('../Graphics/mind02.png')
+        self.over = pygame.image.load('../Graphics/mind_over.png')
+        self.success = pygame.image.load('../Graphics/mind_success.png')
+        self.help = pygame.image.load('../Graphics/mind_help.png')
         self.level = 0
         self.state = 0
         self.t = Types()

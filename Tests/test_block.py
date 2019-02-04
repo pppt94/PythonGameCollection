@@ -1,5 +1,5 @@
 from unittest import TestCase
-from pytris import Block, shapes
+from Source.pytris import Block, shapes
 
 
 class TestBlock(TestCase):
