@@ -25,7 +25,7 @@ class Types():
 
     def __init__(self):
 
-        self.type_array = [pygame.image.load('../Graphics/PythonMind/list.png'), pygame.image.load('../PythonMind/Graphics/int.png'),
+        self.type_array = [pygame.image.load('../Graphics/PythonMind/list.png'), pygame.image.load('../Graphics/PythonMind/int.png'),
                            pygame.image.load('../Graphics/PythonMind/float.png'), pygame.image.load('../Graphics/PythonMind/complex.png'),
                            pygame.image.load('../Graphics/PythonMind/tuple.png'), pygame.image.load('../Graphics/PythonMind/string.png')]
         self.result_img = pygame.image.load('../Graphics/PythonMind/result.png')
