@@ -370,8 +370,7 @@ class Game():
             board.create_grid()
             board.draw_grid()
             board.draw_next_shape(next_piece)
-            text.Text(str(self.score), red, (735, 545), 100)
-            screen.blit(text.print_text()[0], text.print_text()[1])
+            text.Text(str(self.score), red, (735, 545), 100).print_text()
             screen.blit(self.menu, (0, 0))
             pygame.display.update()
 
