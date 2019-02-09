@@ -1,24 +1,10 @@
 import pygame
 import random
-from Source import text
+from Source import text, screen
 
 pygame.init()
 clock = pygame.time.Clock()
-
-#define screen
-scr_width = 880
-scr_height = 720
-screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('Error Eater')
 fps = 5
-
-#define colours
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-gold = (255, 215, 0)
 
 #define snake
 snake_size = 40
@@ -37,8 +23,8 @@ class Snake():
 
     def __init__(self, snake_size):
 
-        self.head_x = scr_width / 2
-        self.head_y = scr_height / 2
+        self.head_x = screen.scr_width / 2
+        self.head_y = screen.scr_height / 2
         self.snake_size = snake_size
         self.snake_body = []
         self.snake_length = 1
@@ -130,17 +116,17 @@ class Snake():
     def draw_snake(self):
 
         self.get_head_direction()
-        screen.blit(self.head, (self.snake_body[-1][0], self.snake_body[-1][1]))
+        screen.screen.blit(self.head, (self.snake_body[-1][0], self.snake_body[-1][1]))
 
         for segment_idx in range(-2, -len(self.snake_body) - 1, -1):
             if segment_idx > -len(self.snake_body):
                 self.get_body_direction(segment_idx)
                 segment = self.snake_body[segment_idx]
-                screen.blit(self.body, (segment[0], segment[1]))
+                screen.screen.blit(self.body, (segment[0], segment[1]))
             else:
                 self.get_tail_direction(segment_idx)
                 segment = self.snake_body[segment_idx]
-                screen.blit(self.tail, (segment[0], segment[1]))
+                screen.screen.blit(self.tail, (segment[0], segment[1]))
             segment_idx -= 1
 
     def eating_food(self, food_x, food_y, bonus_food_x, bonus_food_y):
@@ -175,8 +161,8 @@ class Food():
 
         cord_list = [(i[0], i[1]) for i in snake.snake_body]
         while(True):
-            x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
-            y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
+            x = round(random.randrange(0, screen.scr_width-self.food_size) / self.food_size)*self.food_size
+            y = round(random.randrange(0, screen.scr_height-self.food_size) / self.food_size)*self.food_size
             if (x, y) not in cord_list:
                 break
         self.food_x = x
@@ -186,8 +172,8 @@ class Food():
 
         cord_list = [(i[0], i[1]) for i in snake.snake_body]
         while(True):
-            x = round(random.randrange(0, scr_width-self.food_size) / self.food_size)*self.food_size
-            y = round(random.randrange(0, scr_height-self.food_size) / self.food_size)*self.food_size
+            x = round(random.randrange(0, screen.scr_width-self.food_size) / self.food_size)*self.food_size
+            y = round(random.randrange(0, screen.scr_height-self.food_size) / self.food_size)*self.food_size
             if (x, y) not in cord_list:
                 break
         self.bonus_food_x = x
@@ -197,11 +183,11 @@ class Food():
 
         if self.current_food is None:
             self.current_food = imp
-        screen.blit(self.current_food, (self.food_x, self.food_y))
+        screen.screen.blit(self.current_food, (self.food_x, self.food_y))
 
     def draw_bonus_food(self):
 
-        screen.blit(syn, (self.bonus_food_x, self.bonus_food_y))
+        screen.screen.blit(syn, (self.bonus_food_x, self.bonus_food_y))
 
     def snake_eating(self, snake_x, snake_y):
 
@@ -240,7 +226,7 @@ class Score():
 
     def show_score(self):
 
-        text_1 = text.Text(self.get_score_str(), red, (scr_width / 2, 40), 90)
+        text_1 = text.Text(self.get_score_str(), screen.red, (screen.scr_width / 2, 40), 90)
 
         text_1.print_text()
 
@@ -270,10 +256,10 @@ class Game():
 
     def menu_game(self):
 
-        text_1 = text.Text("Error Eater", red, (scr_width / 2, scr_height / 2 - 100), 90)
-        text_2 = text.Text("Play Game!", red, (scr_width / 2, scr_height / 2 + 50), 40)
-        text_3 = text.Text("Quit Game", red, (scr_width / 2, scr_height / 2 + 150), 40)
-        text_4 = text.Text("Help", red, (scr_width / 2, scr_height / 2 + 100), 40)
+        text_1 = text.Text("Error Eater", screen.red, (screen.scr_width / 2, screen.scr_height / 2 - 100), 90)
+        text_2 = text.Text("Play Game!", screen.red, (screen.scr_width / 2, screen.scr_height / 2 + 50), 40)
+        text_3 = text.Text("Quit Game", screen.red, (screen.scr_width / 2, screen.scr_height / 2 + 150), 40)
+        text_4 = text.Text("Help", screen.red, (screen.scr_width / 2, screen.scr_height / 2 + 100), 40)
 
         select = "Play Game!"
 
@@ -308,34 +294,34 @@ class Game():
                             self.state = 3
                             return None
 
-            screen.blit(self.menu_back, (0, 0))
+            screen.screen.blit(self.menu_back, (0, 0))
             text_1.print_text()
             if select == "Play Game!":
-                text_2.change_colour(gold)
+                text_2.change_colour(screen.gold)
             else:
-                text_2.change_colour(red)
+                text_2.change_colour(screen.red)
             text_2.print_text()
             if select == "Help":
-                text_4.change_colour(gold)
+                text_4.change_colour(screen.gold)
             else:
-                text_4.change_colour(red)
+                text_4.change_colour(screen.red)
             text_4.print_text()
             if select == "Quit Game":
-                text_3.change_colour(gold)
+                text_3.change_colour(screen.gold)
             else:
-                text_3.change_colour(red)
+                text_3.change_colour(screen.red)
             text_3.print_text()
             pygame.display.update()
 
     def help_game(self):
 
-        text_1 = text.Text("How to play???", red, (scr_width / 2, 40), 90)
-        text_2 = text.Text("Eat errors.", red, (scr_width / 2, 140), 40)
-        text_3 = text.Text("Use arrow keys.", red, (scr_width / 2, 240), 40)
-        text_4 = text.Text("Press ESC to go back.", red, (scr_width / 2, 640), 40)
+        text_1 = text.Text("How to play???", screen.red, (screen.scr_width / 2, 40), 90)
+        text_2 = text.Text("Eat errors.", screen.red, (screen.scr_width / 2, 140), 40)
+        text_3 = text.Text("Use arrow keys.", screen.red, (screen.scr_width / 2, 240), 40)
+        text_4 = text.Text("Press ESC to go back.", screen.red, (screen.scr_width / 2, 640), 40)
 
         while True:
-            screen.fill(white)
+            screen.screen.fill(screen.white)
             text_1.print_text()
             text_2.print_text()
             text_3.print_text()
@@ -387,7 +373,7 @@ class Game():
                         self.game_pause()
 
 
-            if snake.head_x >= scr_width or snake.head_x < 0 or snake.head_y >= scr_height or snake.head_y < 0:
+            if snake.head_x >= screen.scr_width or snake.head_x < 0 or snake.head_y >= screen.scr_height or snake.head_y < 0:
                 self.state = 2
                 return None
 
@@ -397,7 +383,7 @@ class Game():
             timer +=1
 
             snake.update_position(inc_x, inc_y, direction)
-            screen.blit(self.back, (0, 0))
+            screen.screen.blit(self.back, (0, 0))
             snake.eating_food(food.food_x, food.food_y, food.bonus_food_x, food.bonus_food_y)
             if food.snake_eating(snake.head_x, snake.head_y):
                 food.generate(snake)
@@ -428,13 +414,13 @@ class Game():
 
     def game_over(self):
 
-        text_1 = text.Text("Game Over", red, (scr_width / 2, scr_height / 2 - 50), 90)
-        text_2 = text.Text("Press SPACE for Play Again or ESC for Quit Game", red, (scr_width / 2, scr_height / 2 + 50), 25)
-        text_3 = text.Text("Your score: ", red, (scr_width / 2 - 50, scr_height / 2 + 100), 25)
-        text_4 = text.Text(self.score, red, (scr_width / 2 + 50, scr_height / 2 + 100), 25)
+        text_1 = text.Text("Game Over", screen.red, (screen.scr_width / 2, screen.scr_height / 2 - 50), 90)
+        text_2 = text.Text("Press SPACE for Play Again or ESC for Quit Game", screen.red, (screen.scr_width / 2, screen.scr_height / 2 + 50), 25)
+        text_3 = text.Text("Your score: ", screen.red, (screen.scr_width / 2 - 50, screen.scr_height / 2 + 100), 25)
+        text_4 = text.Text(self.score, screen.red, (screen.scr_width / 2 + 50, screen.scr_height / 2 + 100), 25)
 
         while True:
-            screen.fill(white)
+            screen.screen.fill(screen.white)
             text_1.print_text()
             text_2.print_text()
             text_3.print_text()
@@ -454,11 +440,11 @@ class Game():
 
     def game_pause(self):
 
-        text_1 = text.Text("Game Paused", red, (scr_width / 2, scr_height / 2 - 50), 40)
-        text_2 = text.Text("Press SPACE for return to the game!", red, (scr_width / 2, scr_height / 2 + 50), 25)
+        text_1 = text.Text("Game Paused", screen.red, (screen.scr_width / 2, screen.scr_height / 2 - 50), 40)
+        text_2 = text.Text("Press SPACE for return to the game!", screen.red, (screen.scr_width / 2, screen.scr_height / 2 + 50), 25)
 
         while True:
-            screen.fill(white)
+            screen.fill(screen.white)
             text_1.print_text()
             text_2.print_text()
             pygame.display.update()

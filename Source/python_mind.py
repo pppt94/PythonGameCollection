@@ -1,25 +1,9 @@
 import pygame
 import random
+from Source import screen
 
 pygame.init()
 clock = pygame.time.Clock()
-
-#define screen
-scr_width = 880
-scr_height = 720
-screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('Error Eater')
-fps = 5
-
-#define colours
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-gold = (255, 215, 0)
-orange = (255, 120, 0)
-gray = (128, 128, 128)
 
 class Types():
 
@@ -48,7 +32,7 @@ class Types():
         p = 290
 
         for x in self.game_array:
-            screen.blit(x, (p, 290))
+            screen.screen.blit(x, (p, 290))
             p += 60
 
     def check_change_coloru(self, position, level):
@@ -64,7 +48,7 @@ class Types():
         if position[0] >= dimensionx and position[0] <= dimensionx + 55:
             if position[1] >= dimensiony and position[1] <= dimensiony + 55 :
 
-                screen.blit(self.type_array[self.type_idx], (dimensionx, dimensiony))
+                screen.screen.blit(self.type_array[self.type_idx], (dimensionx, dimensiony))
 
                 self.player_array[column] = self.type_array[self.type_idx]
 
@@ -95,12 +79,12 @@ class Types():
 
     def print_result(self, level):
 
-        screen.blit(self.result_img, (655, 635 - (78 * level)))
+        screen.screen.blit(self.result_img, (655, 635 - (78 * level)))
         if level >= 1:
-            screen.blit(self.result_array[0], (666, 646 - (78 * (level-1))))
-            screen.blit(self.result_array[1], (692, 646 - (78 * (level-1))))
-            screen.blit(self.result_array[2], (666, 676 - (78 * (level-1))))
-            screen.blit(self.result_array[3], (692, 676 - (78 * (level-1))))
+            screen.screen.blit(self.result_array[0], (666, 646 - (78 * (level-1))))
+            screen.screen.blit(self.result_array[1], (692, 646 - (78 * (level-1))))
+            screen.screen.blit(self.result_array[2], (666, 676 - (78 * (level-1))))
+            screen.screen.blit(self.result_array[3], (692, 676 - (78 * (level-1))))
             pygame.display.update()
 
 
@@ -132,9 +116,7 @@ class Game():
         self.level = 0
         self.state = 0
         self.t = Types()
-        screen.blit(self.menu, (0, 0))
-        # SHOW
-        #self.t.print_game_array()
+        screen.screen.blit(self.menu, (0, 0))
         self.t.print_result(self.level)
 
         while True:
@@ -174,13 +156,13 @@ class Game():
     def game_mode(self):
 
         if self.state == 1:
-            screen.blit(self.over, (0, 0))
+            screen.screen.blit(self.over, (0, 0))
             self.t.print_game_array()
         elif self.state == 2:
-            screen.blit(self.success, (0, 0))
+            screen.screen.blit(self.success, (0, 0))
             self.t.print_game_array()
         else:
-            screen.blit(self.help, (0, 0))
+            screen.screen.blit(self.help, (0, 0))
 
         pygame.display.update()
 

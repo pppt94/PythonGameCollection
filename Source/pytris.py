@@ -1,32 +1,12 @@
 import pygame
 import random
-from Source import text
+from Source import text, screen
 
 pygame.init()
-pygame.display.init()
-pygame.display.list_modes()
 clock = pygame.time.Clock()
-
-#define screen
-scr_width = 880
-scr_height = 720
-screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('Error Eater')
-fps = 5
 block_size = 30
 x_cor = 290
 y_cor = 90
-
-#define colours
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-gold = (255, 215, 0)
-orange = (255, 120, 0)
-gray = (128, 128, 128)
-brown = (150, 75, 0)
 
 #define shapes
 I = [['..X..',
@@ -132,9 +112,8 @@ L = [['.....',
       '.....']]
 
 
-
 shapes = [I, O, S, Z, T, J, L]
-colors = [red, green, blue, gold, orange, gray, brown]
+colors = [screen.red, screen.green, screen.blue, screen.gold, screen.orange, screen.gray, screen.brown]
 
 class Block():
 
@@ -184,15 +163,15 @@ class Board():
     def draw_grid(self):
 
         for i in range(1, len(self.grid)):
-            pygame.draw.line(screen, (128, 128, 128), (x_cor, y_cor+i*block_size), (x_cor+300, y_cor+i*block_size))
+            pygame.draw.line(screen.screen, (128, 128, 128), (x_cor, y_cor+i*block_size), (x_cor+300, y_cor+i*block_size))
             for j in range(1, len(self.grid[i])):
-                pygame.draw.line(screen, (128, 128, 128), (x_cor+j*block_size, y_cor), (x_cor+j*block_size, y_cor+600))
+                pygame.draw.line(screen.screen, (128, 128, 128), (x_cor+j*block_size, y_cor), (x_cor+j*block_size, y_cor+600))
 
     def draw_board(self):
 
         for i in range(len(self.grid)):
             for j in range(len(self.grid[i])):
-                pygame.draw.rect(screen, self.grid[i][j], (x_cor+j*block_size, y_cor+i*block_size, block_size, block_size), 0)
+                pygame.draw.rect(screen.screen, self.grid[i][j], (x_cor+j*block_size, y_cor+i*block_size, block_size, block_size), 0)
 
     def draw_next_shape(self, shape):
 
@@ -202,7 +181,7 @@ class Board():
             row = list(line)
             for j, column in enumerate(row):
                 if column == 'X':
-                    pygame.draw.rect(screen, shape.color, (660 +j*block_size, 200+i*block_size, block_size, block_size), 0)
+                    pygame.draw.rect(screen.screen, shape.color, (660 +j*block_size, 200+i*block_size, block_size, block_size), 0)
 
     def check_space(self, shape):
 
@@ -365,18 +344,18 @@ class Game():
                 self.state = 1
                 return None
 
-            screen.fill(black)
+            screen.screen.fill(screen.black)
             board.draw_board()
             board.create_grid()
             board.draw_grid()
             board.draw_next_shape(next_piece)
-            text.Text(str(self.score), red, (735, 545), 100).print_text()
-            screen.blit(self.menu, (0, 0))
+            text.Text(str(self.score), screen.red, (735, 545), 100).print_text()
+            screen.screen.blit(self.menu, (0, 0))
             pygame.display.update()
 
     def game_over(self):
 
-        screen.blit(self.over, (0, 0))
+        screen.screen.blit(self.over, (0, 0))
         pygame.display.update()
 
         while True:
@@ -394,7 +373,7 @@ class Game():
 
     def help_game(self):
 
-        screen.blit(self.help, (0, 0))
+        screen.screen.blit(self.help, (0, 0))
         pygame.display.update()
 
         while True:
