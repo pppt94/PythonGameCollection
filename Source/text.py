@@ -2,11 +2,6 @@ import pygame
 
 pygame.init()
 clock = pygame.time.Clock()
-#define screen
-scr_width = 880
-scr_height = 720
-screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('Error Eater')
 fps = 5
 
 class Text():

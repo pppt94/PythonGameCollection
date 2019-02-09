@@ -3,6 +3,8 @@ import random
 from Source import text
 
 pygame.init()
+pygame.display.init()
+pygame.display.list_modes()
 clock = pygame.time.Clock()
 
 #define screen
@@ -333,7 +335,6 @@ class Game():
 
             fall_time += clock.get_rawtime()
             clock.tick()
-
             if fall_time / 1000 > fall_speed:
                 fall_time = 0
                 curr_piece.y += 1
