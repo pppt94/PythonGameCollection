@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Source.snake import Food, Snake, foods
+from Source.snake import Food, Snake
 
 class TestFood(TestCase):
 
