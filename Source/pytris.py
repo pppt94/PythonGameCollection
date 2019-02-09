@@ -1,33 +1,15 @@
 import pygame
 import random
-import text
+from Source import text, screen
 
 pygame.init()
 pygame.display.init()
 clock = pygame.time.Clock()
-
-#define screen
-scr_width = 880
-scr_height = 720
-screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('Error Eater')
-fps = 5
 block_size = 30
 x_cor = 290
 y_cor = 90
 
-#define colours
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-gold = (255, 215, 0)
-orange = (255, 120, 0)
-gray = (128, 128, 128)
-brown = (150, 75, 0)
-
-#define shapes
+# define shapes
 I = [['..X..',
       '..X..',
       '..X..',
@@ -130,12 +112,11 @@ L = [['.....',
       '.....',
       '.....']]
 
-
-
 shapes = [I, O, S, Z, T, J, L]
-colors = [red, green, blue, gold, orange, gray, brown]
+colors = [screen.red, screen.green, screen.blue, screen.gold, screen.orange, screen.gray, screen.brown]
 
-class Block():
+
+class Block:
 
     def __init__(self, x, y):
 
@@ -161,7 +142,8 @@ class Block():
 
         return positions
 
-class Board():
+
+class Board:
 
     def __init__(self):
 
@@ -183,15 +165,18 @@ class Board():
     def draw_grid(self):
 
         for i in range(1, len(self.grid)):
-            pygame.draw.line(screen, (128, 128, 128), (x_cor, y_cor+i*block_size), (x_cor+300, y_cor+i*block_size))
+            pygame.draw.line(screen.screen, (128, 128, 128), (x_cor, y_cor + i * block_size),
+                             (x_cor + 300, y_cor + i * block_size))
             for j in range(1, len(self.grid[i])):
-                pygame.draw.line(screen, (128, 128, 128), (x_cor+j*block_size, y_cor), (x_cor+j*block_size, y_cor+600))
+                pygame.draw.line(screen.screen, (128, 128, 128), (x_cor + j * block_size, y_cor),
+                                 (x_cor + j * block_size, y_cor + 600))
 
     def draw_board(self):
 
         for i in range(len(self.grid)):
             for j in range(len(self.grid[i])):
-                pygame.draw.rect(screen, self.grid[i][j], (x_cor+j*block_size, y_cor+i*block_size, block_size, block_size), 0)
+                pygame.draw.rect(screen.screen, self.grid[i][j],
+                                 (x_cor + j * block_size, y_cor + i * block_size, block_size, block_size), 0)
 
     def draw_next_shape(self, shape):
 
@@ -201,7 +186,8 @@ class Board():
             row = list(line)
             for j, column in enumerate(row):
                 if column == 'X':
-                    pygame.draw.rect(screen, shape.color, (660 +j*block_size, 200+i*block_size, block_size, block_size), 0)
+                    pygame.draw.rect(screen.screen, shape.color,
+                                     (660 + j * block_size, 200 + i * block_size, block_size, block_size), 0)
 
     def check_space(self, shape):
 
@@ -231,7 +217,7 @@ class Board():
 
         rows = 0
 
-        for i in range(len(self.grid)-1, -1, -1):
+        for i in range(len(self.grid) - 1, -1, -1):
             row = self.grid[i]
             if (0, 0, 0) not in row:
                 rows += 1
@@ -249,16 +235,16 @@ class Board():
 
         return rows * 10
 
+
 class Game():
 
     def __init__(self):
-        self.menu = pygame.image.load('Graphics/pytris_menu.png')
-        self.over = pygame.image.load('Graphics/pytris_over.png')
-        self.help = pygame.image.load('Graphics/pytris_help.png')
+        self.menu = pygame.image.load('../Graphics/Pytris/pytris_menu.png')
+        self.over = pygame.image.load('../Graphics/Pytris/pytris_over.png')
+        self.help = pygame.image.load('../Graphics/Pytris/pytris_help.png')
         self.state = 0
         self.score = 0
         self.pause = 0
-
 
     def game_loop(self):
 
@@ -319,22 +305,21 @@ class Game():
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
-                    if position[0] >= 55 and position[0] <= 205:
-                        if position[1] >= 15 and position[1] <= 165:
+                    if 55 <= position[0] <= 205:
+                        if 15 <= position[1] <= 165:
                             self.state = 2
                             return None
-                        elif position[1] >= 195 and position[1] <= 345:
+                        elif 195 <= position[1] <= 345:
                             return None
-                        elif position[1] >= 375 and position[1] <= 525:
+                        elif 375 <= position[1] <= 525:
                             self.state = 0
                             return None
-                        elif position[1] >= 555 and position[1] <= 705:
+                        elif 555 <= position[1] <= 705:
                             self.state = 3
                             return None
 
             fall_time += clock.get_rawtime()
             clock.tick()
-
             if fall_time / 1000 > fall_speed:
                 fall_time = 0
                 curr_piece.y += 1
@@ -365,18 +350,18 @@ class Game():
                 self.state = 1
                 return None
 
-            screen.fill(black)
+            screen.screen.fill(screen.black)
             board.draw_board()
             board.create_grid()
             board.draw_grid()
             board.draw_next_shape(next_piece)
-            text.Text(str(self.score), red, (735, 545), 100).print_text()
-            screen.blit(self.menu, (0, 0))
+            text.Text(str(self.score), screen.red, (735, 545), 100).print_text()
+            screen.screen.blit(self.menu, (0, 0))
             pygame.display.update()
 
     def game_over(self):
 
-        screen.blit(self.over, (0, 0))
+        screen.screen.blit(self.over, (0, 0))
         pygame.display.update()
 
         while True:
@@ -394,7 +379,7 @@ class Game():
 
     def help_game(self):
 
-        screen.blit(self.help, (0, 0))
+        screen.screen.blit(self.help, (0, 0))
         pygame.display.update()
 
         while True:

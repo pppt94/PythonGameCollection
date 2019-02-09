@@ -1,15 +1,10 @@
 import pygame
+from Source import screen
 
 pygame.init()
-clock = pygame.time.Clock()
-#define screen
-scr_width = 880
-scr_height = 720
-screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('Error Eater')
-fps = 5
 
-class Text():
+
+class Text:
 
     def __init__(self, text, colour, position, size):
 
@@ -31,7 +26,7 @@ class Text():
 
         self.text_obj()
         self.text_rect.center = (self.position[0]), (self.position[1])
-        screen.blit(self.text_font, self.text_rect)
+        screen.screen.blit(self.text_font, self.text_rect)
 
     def change_colour(self, colour):
 

@@ -1,35 +1,17 @@
 import pygame
-import snake
-import python_mind
-import pytris
-import text
+from Source import snake, pytris, python_mind, screen
 
 pygame.init()
-clock = pygame.time.Clock()
 
-#define screen
-scr_width = 880
-scr_height = 720
-screen = pygame.display.set_mode((scr_width, scr_height))
-pygame.display.set_caption('Error Eater')
-fps = 5
 
-#define colours
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-gold = (255, 215, 0)
-
-class Menu():
+class Menu:
 
     def __init__(self):
 
         self.select = "Tetris"
-        self.menu_eater = pygame.image.load('Graphics/menu_eater.png')
-        self.menu_pytris = pygame.image.load('Graphics/menu_pytris.png')
-        self.menu_mind = pygame.image.load('Graphics/menu_mind.png')
+        self.menu_eater = pygame.image.load('../Graphics/Menu/menu_eater.png')
+        self.menu_pytris = pygame.image.load('../Graphics/Menu/menu_pytris.png')
+        self.menu_mind = pygame.image.load('../Graphics/Menu/menu_mind.png')
         self.game_mind = python_mind.Game()
         self.game_snake = snake.Game()
         self.game_tetris = pytris.Game()
@@ -61,14 +43,15 @@ class Menu():
                         elif self.select == "Tetris":
                             self.game_tetris.game_loop()
 
-            screen.blit(self.menu_pytris, (0, 0))
+            screen.screen.blit(self.menu_pytris, (0, 0))
 
             if self.select == "Master":
-                screen.blit(self.menu_mind, (0, 0))
+                screen.screen.blit(self.menu_mind, (0, 0))
             elif self.select == "Tetris":
-                screen.blit(self.menu_pytris, (0, 0))
+                screen.screen.blit(self.menu_pytris, (0, 0))
             else:
-                screen.blit(self.menu_eater, (0, 0))
+                screen.screen.blit(self.menu_eater, (0, 0))
             pygame.display.update()
+
 
 Menu()
