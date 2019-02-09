@@ -7,11 +7,11 @@ clock = pygame.time.Clock()
 fps = 5
 
 # import graphics
-#syn = pygame.image.load('../Graphics/Snake/food_syntax.png')
-#imp = pygame.image.load('../Graphics/Snake/food_import.png')
-#ind = pygame.image.load('../Graphics/Snake/food_index.png')
-#nam = pygame.image.load('../Graphics/Snake/food_name.png')
-#typ = pygame.image.load('../Graphics/Snake/food_type.png')
+syn = pygame.image.load('Graphics/Snake/food_syntax.png')
+imp = pygame.image.load('Graphics/Snake/food_import.png')
+ind = pygame.image.load('Graphics/Snake/food_index.png')
+nam = pygame.image.load('Graphics/Snake/food_name.png')
+typ = pygame.image.load('Graphics/Snake/food_type.png')
 
 foods = [imp, ind, nam, typ]
 snake_size = 40

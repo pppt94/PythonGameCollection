@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Source.snake import Snake
+from snake import Snake
 
 
 class TestSnake(TestCase):
