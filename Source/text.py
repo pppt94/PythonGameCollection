@@ -3,7 +3,8 @@ from Source import screen
 
 pygame.init()
 
-class Text():
+
+class Text:
 
     def __init__(self, text, colour, position, size):
 

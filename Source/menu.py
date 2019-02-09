@@ -4,7 +4,7 @@ from Source import snake, pytris, python_mind, screen
 pygame.init()
 
 
-class Menu():
+class Menu:
 
     def __init__(self):
 
@@ -52,5 +52,6 @@ class Menu():
             else:
                 screen.screen.blit(self.menu_eater, (0, 0))
             pygame.display.update()
+
 
 Menu()

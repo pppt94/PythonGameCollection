@@ -8,7 +8,7 @@ block_size = 30
 x_cor = 290
 y_cor = 90
 
-#define shapes
+# define shapes
 I = [['..X..',
       '..X..',
       '..X..',
@@ -111,11 +111,11 @@ L = [['.....',
       '.....',
       '.....']]
 
-
 shapes = [I, O, S, Z, T, J, L]
 colors = [screen.red, screen.green, screen.blue, screen.gold, screen.orange, screen.gray, screen.brown]
 
-class Block():
+
+class Block:
 
     def __init__(self, x, y):
 
@@ -141,7 +141,8 @@ class Block():
 
         return positions
 
-class Board():
+
+class Board:
 
     def __init__(self):
 
@@ -163,15 +164,18 @@ class Board():
     def draw_grid(self):
 
         for i in range(1, len(self.grid)):
-            pygame.draw.line(screen.screen, (128, 128, 128), (x_cor, y_cor+i*block_size), (x_cor+300, y_cor+i*block_size))
+            pygame.draw.line(screen.screen, (128, 128, 128), (x_cor, y_cor + i * block_size),
+                             (x_cor + 300, y_cor + i * block_size))
             for j in range(1, len(self.grid[i])):
-                pygame.draw.line(screen.screen, (128, 128, 128), (x_cor+j*block_size, y_cor), (x_cor+j*block_size, y_cor+600))
+                pygame.draw.line(screen.screen, (128, 128, 128), (x_cor + j * block_size, y_cor),
+                                 (x_cor + j * block_size, y_cor + 600))
 
     def draw_board(self):
 
         for i in range(len(self.grid)):
             for j in range(len(self.grid[i])):
-                pygame.draw.rect(screen.screen, self.grid[i][j], (x_cor+j*block_size, y_cor+i*block_size, block_size, block_size), 0)
+                pygame.draw.rect(screen.screen, self.grid[i][j],
+                                 (x_cor + j * block_size, y_cor + i * block_size, block_size, block_size), 0)
 
     def draw_next_shape(self, shape):
 
@@ -181,7 +185,8 @@ class Board():
             row = list(line)
             for j, column in enumerate(row):
                 if column == 'X':
-                    pygame.draw.rect(screen.screen, shape.color, (660 +j*block_size, 200+i*block_size, block_size, block_size), 0)
+                    pygame.draw.rect(screen.screen, shape.color,
+                                     (660 + j * block_size, 200 + i * block_size, block_size, block_size), 0)
 
     def check_space(self, shape):
 
@@ -211,7 +216,7 @@ class Board():
 
         rows = 0
 
-        for i in range(len(self.grid)-1, -1, -1):
+        for i in range(len(self.grid) - 1, -1, -1):
             row = self.grid[i]
             if (0, 0, 0) not in row:
                 rows += 1
@@ -229,6 +234,7 @@ class Board():
 
         return rows * 10
 
+
 class Game():
 
     def __init__(self):
@@ -238,7 +244,6 @@ class Game():
         self.state = 0
         self.score = 0
         self.pause = 0
-
 
     def game_loop(self):
 
@@ -299,16 +304,16 @@ class Game():
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     position = pygame.mouse.get_pos()
-                    if position[0] >= 55 and position[0] <= 205:
-                        if position[1] >= 15 and position[1] <= 165:
+                    if 55 <= position[0] <= 205:
+                        if 15 <= position[1] <= 165:
                             self.state = 2
                             return None
-                        elif position[1] >= 195 and position[1] <= 345:
+                        elif 195 <= position[1] <= 345:
                             return None
-                        elif position[1] >= 375 and position[1] <= 525:
+                        elif 375 <= position[1] <= 525:
                             self.state = 0
                             return None
-                        elif position[1] >= 555 and position[1] <= 705:
+                        elif 555 <= position[1] <= 705:
                             self.state = 3
                             return None
 

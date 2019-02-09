@@ -6,10 +6,7 @@ pygame.init()
 clock = pygame.time.Clock()
 fps = 5
 
-#define snake
-snake_size = 40
-
-#import graphics
+# import graphics
 syn = pygame.image.load('../Graphics/Snake/food_syntax.png')
 imp = pygame.image.load('../Graphics/Snake/food_import.png')
 ind = pygame.image.load('../Graphics/Snake/food_index.png')
@@ -17,15 +14,16 @@ nam = pygame.image.load('../Graphics/Snake/food_name.png')
 typ = pygame.image.load('../Graphics/Snake/food_type.png')
 
 foods = [imp, ind, nam, typ]
+snake_size = 40
 
 
-class Snake():
+class Snake:
 
-    def __init__(self, snake_size):
+    def __init__(self):
 
         self.head_x = screen.scr_width / 2
         self.head_y = screen.scr_height / 2
-        self.snake_size = snake_size
+        self.snake_size = 40
         self.snake_body = []
         self.snake_length = 1
         self.head_direction = "UP"
@@ -63,7 +61,7 @@ class Snake():
 
         if self.snake_body[segment_idx + 1][2] == "UP":
             if segment_idx > - len(self.snake_body):
-                if self.snake_body[segment_idx ][2] == "UP" or self.snake_body[segment_idx][2] == "DOWN":
+                if self.snake_body[segment_idx][2] == "UP" or self.snake_body[segment_idx][2] == "DOWN":
                     self.body = self.body_img
                 elif self.snake_body[segment_idx][2] == "LEFT":
                     self.body = pygame.transform.rotate(self.curves_img, 90)
@@ -73,7 +71,7 @@ class Snake():
                 self.body = self.body_img
         elif self.snake_body[segment_idx + 1][2] == "DOWN":
             if segment_idx > - len(self.snake_body):
-                if self.snake_body[segment_idx ][2] == "UP" or self.snake_body[segment_idx][2] == "DOWN":
+                if self.snake_body[segment_idx][2] == "UP" or self.snake_body[segment_idx][2] == "DOWN":
                     self.body = self.body_img
                 elif self.snake_body[segment_idx][2] == "LEFT":
                     self.body = self.curves_img
@@ -83,7 +81,7 @@ class Snake():
                 self.body = self.body_img
         elif self.snake_body[segment_idx + 1][2] == "LEFT":
             if segment_idx > - len(self.snake_body):
-                if self.snake_body[segment_idx ][2] == "LEFT" or self.snake_body[segment_idx][2] == "RIGHT":
+                if self.snake_body[segment_idx][2] == "LEFT" or self.snake_body[segment_idx][2] == "RIGHT":
                     self.body = pygame.transform.rotate(self.body_img, 90)
                 elif self.snake_body[segment_idx][2] == "UP":
                     self.body = pygame.transform.rotate(self.curves_img, 270)
@@ -93,7 +91,7 @@ class Snake():
                 self.body = pygame.transform.rotate(self.body_img, 90)
         elif self.snake_body[segment_idx + 1][2] == "RIGHT":
             if segment_idx > - len(self.snake_body):
-                if self.snake_body[segment_idx ][2] == "LEFT" or self.snake_body[segment_idx][2] == "RIGHT":
+                if self.snake_body[segment_idx][2] == "LEFT" or self.snake_body[segment_idx][2] == "RIGHT":
                     self.body = pygame.transform.rotate(self.body_img, 90)
                 elif self.snake_body[segment_idx][2] == "UP":
                     self.body = self.curves_img
@@ -131,11 +129,12 @@ class Snake():
 
     def eating_food(self, food_x, food_y, bonus_food_x, bonus_food_y):
 
-        if (self.head_x == food_x and self.head_y == food_y) or self.head_x == bonus_food_x and self.head_y == bonus_food_y:
+        if (
+                self.head_x == food_x and self.head_y == food_y) or \
+                self.head_x == bonus_food_x and self.head_y == bonus_food_y:
             self.snake_length += 1
 
-
-    def check_colision(self):
+    def check_collision(self):
 
         cord_list = [(i[0], i[1]) for i in self.snake_body[:-1]]
 
@@ -144,7 +143,8 @@ class Snake():
         else:
             return False
 
-class Food():
+
+class Food:
 
     def __init__(self):
 
@@ -156,13 +156,12 @@ class Food():
         self.current_food = None
         self.current_food = imp
 
-
     def generate(self, snake):
 
         cord_list = [(i[0], i[1]) for i in snake.snake_body]
-        while(True):
-            x = round(random.randrange(0, screen.scr_width-self.food_size) / self.food_size)*self.food_size
-            y = round(random.randrange(0, screen.scr_height-self.food_size) / self.food_size)*self.food_size
+        while True:
+            x = round(random.randrange(0, screen.scr_width - self.food_size) / self.food_size) * self.food_size
+            y = round(random.randrange(0, screen.scr_height - self.food_size) / self.food_size) * self.food_size
             if (x, y) not in cord_list:
                 break
         self.food_x = x
@@ -171,9 +170,9 @@ class Food():
     def generate_bonus_food(self, snake):
 
         cord_list = [(i[0], i[1]) for i in snake.snake_body]
-        while(True):
-            x = round(random.randrange(0, screen.scr_width-self.food_size) / self.food_size)*self.food_size
-            y = round(random.randrange(0, screen.scr_height-self.food_size) / self.food_size)*self.food_size
+        while True:
+            x = round(random.randrange(0, screen.scr_width - self.food_size) / self.food_size) * self.food_size
+            y = round(random.randrange(0, screen.scr_height - self.food_size) / self.food_size) * self.food_size
             if (x, y) not in cord_list:
                 break
         self.bonus_food_x = x
@@ -200,37 +199,33 @@ class Food():
         if self.bonus_food_x == snake_x and self.bonus_food_y == snake_y:
             return True
 
-class Score():
+
+class Score:
 
     def __init__(self):
-
         self.result = 0
 
     def get_score_str(self):
-
         str_res = str(self.result)
 
-        return "Score: "+str_res
+        return "Score: " + str_res
 
     def get_score(self):
-
         return self.result
 
     def update_score(self):
-
         self.result += 10
 
     def update_score_special(self):
-
         self.result += 20
 
     def show_score(self):
-
         text_1 = text.Text(self.get_score_str(), screen.red, (screen.scr_width / 2, 40), 90)
 
         text_1.print_text()
 
-class Game():
+
+class Game:
 
     def __init__(self):
 
@@ -335,12 +330,13 @@ class Game():
                     if event.key == pygame.K_ESCAPE:
                         self.state = 0
                         return None
+
     def start_game(self):
 
         inc_x = 0
         inc_y = 0
         food = Food()
-        snake = Snake(snake_size)
+        snake = Snake()
         food.generate(snake)
         food.generate_bonus_food(snake)
         score = Score()
@@ -372,15 +368,15 @@ class Game():
                     elif event.key == pygame.K_p:
                         self.game_pause()
 
-
-            if snake.head_x >= screen.scr_width or snake.head_x < 0 or snake.head_y >= screen.scr_height or snake.head_y < 0:
+            if snake.head_x >= screen.scr_width or snake.head_x < 0 or\
+                    snake.head_y >= screen.scr_height or snake.head_y < 0:
                 self.state = 2
                 return None
 
-            if snake.check_colision():
+            if snake.check_collision():
                 self.state = 2
                 return None
-            timer +=1
+            timer += 1
 
             snake.update_position(inc_x, inc_y, direction)
             screen.screen.blit(self.back, (0, 0))
@@ -404,9 +400,8 @@ class Game():
             score.show_score()
             self.score = str(score.get_score())
 
-
             pygame.display.update()
-            if snake.check_colision():
+            if snake.check_collision():
                 self.state = 2
                 return None
 
@@ -415,7 +410,8 @@ class Game():
     def game_over(self):
 
         text_1 = text.Text("Game Over", screen.red, (screen.scr_width / 2, screen.scr_height / 2 - 50), 90)
-        text_2 = text.Text("Press SPACE for Play Again or ESC for Quit Game", screen.red, (screen.scr_width / 2, screen.scr_height / 2 + 50), 25)
+        text_2 = text.Text("Press SPACE for Play Again or ESC for Quit Game", screen.red,
+                           (screen.scr_width / 2, screen.scr_height / 2 + 50), 25)
         text_3 = text.Text("Your score: ", screen.red, (screen.scr_width / 2 - 50, screen.scr_height / 2 + 100), 25)
         text_4 = text.Text(self.score, screen.red, (screen.scr_width / 2 + 50, screen.scr_height / 2 + 100), 25)
 
@@ -438,13 +434,15 @@ class Game():
                     self.state = 3
                     return None
 
-    def game_pause(self):
+    @staticmethod
+    def game_pause():
 
         text_1 = text.Text("Game Paused", screen.red, (screen.scr_width / 2, screen.scr_height / 2 - 50), 40)
-        text_2 = text.Text("Press SPACE for return to the game!", screen.red, (screen.scr_width / 2, screen.scr_height / 2 + 50), 25)
+        text_2 = text.Text("Press SPACE for return to the game!", screen.red,
+                           (screen.scr_width / 2, screen.scr_height / 2 + 50), 25)
 
         while True:
-            screen.fill(screen.white)
+            screen.screen.fill(screen.white)
             text_1.print_text()
             text_2.print_text()
             pygame.display.update()
