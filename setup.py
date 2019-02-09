@@ -1,5 +1,7 @@
+import os
 from setuptools import setup
 
+os.chdir("/Source")
 setup(
     name='Projekt_Pygame',
     version='',
