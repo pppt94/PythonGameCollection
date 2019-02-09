@@ -26,7 +26,7 @@ class Text():
 
         self.text_obj()
         self.text_rect.center = (self.position[0]), (self.position[1])
-        return (self.text_font, self.text_rect)
+        screen.blit(self.text_font, self.text_rect)
 
     def change_colour(self, colour):
 
