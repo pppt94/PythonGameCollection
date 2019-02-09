@@ -3,6 +3,7 @@ import random
 from Source import text, screen
 
 pygame.init()
+pygame.display.init()
 clock = pygame.time.Clock()
 block_size = 30
 x_cor = 290
