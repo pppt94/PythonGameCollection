@@ -1,5 +1,4 @@
 import pygame
-from Source import screen
 
 pygame.init()
 
@@ -26,7 +25,7 @@ class Text:
 
         self.text_obj()
         self.text_rect.center = (self.position[0]), (self.position[1])
-        screen.screen.blit(self.text_font, self.text_rect)
+        #screen.screen.blit(self.text_font, self.text_rect)
 
     def change_colour(self, colour):
 
