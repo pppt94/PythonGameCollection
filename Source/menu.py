@@ -1,5 +1,5 @@
 import pygame
-from Source import snake, pytris, python_mind, screen
+from Source import snake, pytris, python_mind
 
 pygame.init()
 
@@ -43,14 +43,14 @@ class Menu:
                         elif self.select == "Tetris":
                             self.game_tetris.game_loop()
 
-            screen.screen.blit(self.menu_pytris, (0, 0))
+            #screen.screen.blit(self.menu_pytris, (0, 0))
 
-            if self.select == "Master":
-                screen.screen.blit(self.menu_mind, (0, 0))
-            elif self.select == "Tetris":
-                screen.screen.blit(self.menu_pytris, (0, 0))
-            else:
-                screen.screen.blit(self.menu_eater, (0, 0))
+            #if self.select == "Master":
+                #screen.screen.blit(self.menu_mind, (0, 0))
+            #elif self.select == "Tetris":
+                #screen.screen.blit(self.menu_pytris, (0, 0))
+            #else:
+                #screen.screen.blit(self.menu_eater, (0, 0))
             pygame.display.update()
 
 

@@ -6,7 +6,7 @@ class TestSnake(TestCase):
 
     def test_update_position(self):
 
-        snake = Snake(5)
+        snake = Snake()
         snake.update_position(10, 10, "UP")
 
         self.assertEqual(snake.head_x, 450)
@@ -21,7 +21,7 @@ class TestSnake(TestCase):
 
     def test_eating_food(self):
 
-        snake = Snake(5)
+        snake = Snake()
         self.assertEqual(snake.snake_length, 1)
 
         snake.head_x = 10
@@ -37,11 +37,11 @@ class TestSnake(TestCase):
 
     def test_check_colision(self):
 
-        snake = Snake(5)
+        snake = Snake()
 
         snake.head_x, snake.head_y = 100, 100
         snake.snake_body = [(1, 1), (5, 5), (100, 100)]
-        self.assertFalse(snake.check_colision())
+        self.assertFalse(snake.check_collision())
 
         snake.snake_body = [(100, 100), (1, 1), (5, 5), (100, 100)]
-        self.assertTrue(snake.check_colision())
+        self.assertTrue(snake.check_collision())

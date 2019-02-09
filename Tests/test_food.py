@@ -6,7 +6,7 @@ class TestFood(TestCase):
     def test_generate(self):
 
         food = Food()
-        snake = Snake(5)
+        snake = Snake()
         food.generate(snake)
 
         self.assertGreaterEqual(food.food_x, 0)
@@ -20,7 +20,7 @@ class TestFood(TestCase):
     def test_generate_bonus_food(self):
 
         food = Food()
-        snake = Snake(5)
+        snake = Snake()
         food.generate_bonus_food(snake)
 
         self.assertGreaterEqual(food.bonus_food_x, 0)
