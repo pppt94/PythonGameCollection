@@ -24,9 +24,9 @@ class Menu():
     def __init__(self):
 
         self.select = "Tetris"
-        self.menu_eater = pygame.image.load('../Graphics/menu_eater.png')
-        self.menu_pytris = pygame.image.load('../Graphics/menu_pytris.png')
-        self.menu_mind = pygame.image.load('../Graphics/menu_mind.png')
+        self.menu_eater = pygame.image.load('../Graphics/Menu/menu_eater.png')
+        self.menu_pytris = pygame.image.load('../Graphics/Menu/menu_pytris.png')
+        self.menu_mind = pygame.image.load('../Graphics/Menu/menu_mind.png')
         self.game_mind = python_mind.Game()
         self.game_snake = snake.Game()
         self.game_tetris = pytris.Game()

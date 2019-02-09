@@ -24,11 +24,11 @@ gold = (255, 215, 0)
 snake_size = 40
 
 #import graphics
-syn = pygame.image.load('../Graphics/food_syntax.png')
-imp = pygame.image.load('../Graphics/food_import.png')
-ind = pygame.image.load('../Graphics/food_index.png')
-nam = pygame.image.load('../Graphics/food_name.png')
-typ = pygame.image.load('../Graphics/food_type.png')
+syn = pygame.image.load('../Graphics/Snake/food_syntax.png')
+imp = pygame.image.load('../Graphics/Snake/food_import.png')
+ind = pygame.image.load('../Graphics/Snake/food_index.png')
+nam = pygame.image.load('../Graphics/Snake/food_name.png')
+typ = pygame.image.load('../Graphics/Snake/food_type.png')
 
 foods = [imp, ind, nam, typ]
 
@@ -43,13 +43,13 @@ class Snake():
         self.snake_body = []
         self.snake_length = 1
         self.head_direction = "UP"
-        self.head_img = pygame.image.load('../Graphics/snake_head.png')
+        self.head_img = pygame.image.load('../Graphics/Snake/snake_head.png')
         self.head = self.head_img
-        self.body_img = pygame.image.load('../Graphics/snake_body.png')
+        self.body_img = pygame.image.load('../Graphics/Snake/snake_body.png')
         self.body = self.body_img
-        self.curves_img = pygame.image.load('../Graphics/snake_curves.png')
+        self.curves_img = pygame.image.load('../Graphics/Snake/snake_curves.png')
         self.curves = self.curves_img
-        self.tail_img = pygame.image.load('../Graphics/snake_tail.png')
+        self.tail_img = pygame.image.load('../Graphics/Snake/snake_tail.png')
         self.tail = self.tail_img
 
     def update_position(self, inc_x, inc_y, direction):
@@ -249,8 +249,8 @@ class Game():
     def __init__(self):
 
         self.state = 0
-        self.back = pygame.image.load('../Graphics/back.png')
-        self.menu_back = pygame.image.load('../Graphics/menu.png')
+        self.back = pygame.image.load('../Graphics/Snake/back.png')
+        self.menu_back = pygame.image.load('../Graphics/Snake/menu.png')
         self.score = " "
 
     def game_loop(self):

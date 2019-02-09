@@ -253,9 +253,9 @@ class Board():
 class Game():
 
     def __init__(self):
-        self.menu = pygame.image.load('../Graphics/pytris_menu.png')
-        self.over = pygame.image.load('../Graphics/pytris_over.png')
-        self.help = pygame.image.load('../Graphics/pytris_help.png')
+        self.menu = pygame.image.load('../Graphics/Pytris/pytris_menu.png')
+        self.over = pygame.image.load('../Graphics/Pytris/pytris_over.png')
+        self.help = pygame.image.load('../Graphics/Pytris/pytris_help.png')
         self.state = 0
         self.score = 0
         self.pause = 0
