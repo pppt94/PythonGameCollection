@@ -6,9 +6,7 @@ sudo: true
 install:
   - pip install -r requirements.txt
   - pip install codecov
-before script:
-  - cd Source
 script:
- - coverage run Source/setup.py test
+ - coverage run setup.py test
 after_success:
   - codecov
