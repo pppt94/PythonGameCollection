@@ -7,7 +7,7 @@ install:
   - pip install -r requirements.txt
   - pip install codecov
 before script:
-  - cd Sources
+  - cd Source
 script:
  - coverage run Source/setup.py test
 after_success:
