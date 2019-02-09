@@ -1,5 +1,6 @@
 import pygame
-from Source import pytris, python_mind
+from Source import pytris
+import python_mind
 import snake
 
 pygame.init()

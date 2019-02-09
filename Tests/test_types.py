@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Source.python_mind import Types
+from python_mind import Types
 
 class TestTypes(TestCase):
 

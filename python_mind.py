@@ -9,16 +9,16 @@ class Types:
 
     def __init__(self):
 
-        self.type_array = [pygame.image.load('../Graphics/PythonMind/list.png'),
-                           pygame.image.load('../Graphics/PythonMind/int.png'),
-                           pygame.image.load('../Graphics/PythonMind/float.png'),
-                           pygame.image.load('../Graphics/PythonMind/complex.png'),
-                           pygame.image.load('../Graphics/PythonMind/tuple.png'),
-                           pygame.image.load('../Graphics/PythonMind/string.png')]
-        self.result_img = pygame.image.load('../Graphics/PythonMind/result.png')
-        self.white_img = pygame.image.load('../Graphics/PythonMind/white.png')
-        self.black_img = pygame.image.load('../Graphics/PythonMind/black.png')
-        self.gray_img = pygame.image.load('../Graphics/PythonMind/gray.png')
+        self.type_array = [pygame.image.load('Graphics/PythonMind/list.png'),
+                           pygame.image.load('Graphics/PythonMind/int.png'),
+                           pygame.image.load('Graphics/PythonMind/float.png'),
+                           pygame.image.load('Graphics/PythonMind/complex.png'),
+                           pygame.image.load('Graphics/PythonMind/tuple.png'),
+                           pygame.image.load('Graphics/PythonMind/string.png')]
+        self.result_img = pygame.image.load('Graphics/PythonMind/result.png')
+        self.white_img = pygame.image.load('Graphics/PythonMind/white.png')
+        self.black_img = pygame.image.load('Graphics/PythonMind/black.png')
+        self.gray_img = pygame.image.load('Graphics/PythonMind/gray.png')
         self.game_array = []
         self.player_array = [0, 0, 0, 0]
         self.result_array = []
@@ -91,10 +91,10 @@ class Game:
 
     def __init__(self):
 
-        self.menu = pygame.image.load('../Graphics/PythonMind/mind02.png')
-        self.over = pygame.image.load('../Graphics/PythonMind/mind_over.png')
-        self.success = pygame.image.load('../Graphics/PythonMind/mind_success.png')
-        self.help = pygame.image.load('../Graphics/PythonMind/mind_help.png')
+        self.menu = pygame.image.load('Graphics/PythonMind/mind02.png')
+        self.over = pygame.image.load('Graphics/PythonMind/mind_over.png')
+        self.success = pygame.image.load('Graphics/PythonMind/mind_success.png')
+        self.help = pygame.image.load('Graphics/PythonMind/mind_help.png')
         self.level = 0
         self.state = 0
         self.t = Types()
