@@ -1,9 +1,7 @@
-PythonGameCollection
+Snake
+=============
+Pytris
+=============
+Python Mind
 =============
 
-Games
-----------
-
-.. toctree::
-
-   Snake
