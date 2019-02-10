@@ -1,5 +1,8 @@
 from unittest import TestCase
 from Source.snake import Food, Snake, foods
+import pygame
+pygame.init()
+
 
 class TestFood(TestCase):
 
