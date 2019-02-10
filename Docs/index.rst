@@ -5,6 +5,9 @@
 
 Welcome to PythonGameCollection's documentation!
 ================================================
+.. toctree::
+   pgc.rst
+
 
 Overview
 ==================
@@ -25,10 +28,6 @@ Game controls:
  - Python-Mind - use your mouse
  - Pytris - use both keyboard & mouse
  
- Games
-=============
-.. toctree::
-   pgc.rst
 
 
 
