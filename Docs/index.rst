@@ -5,6 +5,8 @@
 
 Welcome to PythonGameCollection's documentation!
 ================================================
+Games
+----------
 .. toctree::
    pgc.rst
 
