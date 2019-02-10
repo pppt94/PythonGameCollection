@@ -234,6 +234,7 @@ class Game:
         self.back = pygame.image.load('Graphics/Snake/back.png')
         self.menu_back = pygame.image.load('Graphics/Snake/menu.png')
         self.score = " "
+        self.pause = 0
 
     def game_loop(self):
 
@@ -369,6 +370,9 @@ class Game:
                     elif event.key == pygame.K_p:
                         self.game_pause()
 
+            if self.state == 2:
+                return None
+
             if snake.head_x >= 880 or snake.head_x < 0 or\
                     snake.head_y >= 880 or snake.head_y < 0:
                 self.state = 2
@@ -435,13 +439,11 @@ class Game:
                     self.state = 3
                     return None
 
-    @staticmethod
-    def game_pause():
+    def game_pause(self):
 
         text_1 = text.Text("Game Paused", (255, 0, 0), (880 / 2, 720 / 2 - 50), 40)
         text_2 = text.Text("Press SPACE for return to the game!", (255, 0, 0),
                            (880 / 2, 720 / 2 + 50), 25)
-
         while True:
             #screen.screen.fill(screen.white)
             text_1.print_text()
