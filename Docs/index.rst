@@ -6,6 +6,10 @@
 Welcome to PythonGameCollection's documentation!
 ================================================
 
+.. toctree::
+   pgc.rst
+
+
 Overview
 ==================
 PythonGameCollection is a small application with three simply games.
@@ -25,7 +29,3 @@ Game controls:
  - Python-Mind - use your mouse
  - Pytris - use both keyboard & mouse
 
-.. toctree::
-   :caption: Technical reference:
-   :maxdepth: 4
-   pgc.rst
