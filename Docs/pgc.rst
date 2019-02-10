@@ -1,7 +1,5 @@
-Snake
-=============
-Pytris
-=============
-Python Mind
-=============
+.. toctree::
 
+   Snake
+   Pytris
+   Python Mind
