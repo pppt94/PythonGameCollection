@@ -9,7 +9,6 @@ class TestGame(TestCase):
         game.state = 2
         self.assertEqual(game.start_game(), None)
 
-
     def test_game_pause(self):
 
         game = Game()

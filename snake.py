@@ -345,6 +345,9 @@ class Game:
         direction = None
         timer = 0
 
+        if self.state == 2:
+            return None
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -369,9 +372,6 @@ class Game:
                         direction = "RIGHT"
                     elif event.key == pygame.K_p:
                         self.game_pause()
-
-            if self.state == 2:
-                return None
 
             if snake.head_x >= 880 or snake.head_x < 0 or\
                     snake.head_y >= 880 or snake.head_y < 0:
