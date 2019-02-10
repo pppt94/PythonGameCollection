@@ -5,6 +5,7 @@ pygame.init()
 
 
 class Menu:
+    """Class used to building & navigating menu."""
 
     def __init__(self):
 
