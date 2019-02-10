@@ -1,5 +1,8 @@
 from unittest import TestCase
 from Source.pytris import Block, shapes
+import pygame
+
+pygame.init()
 
 
 class TestBlock(TestCase):
