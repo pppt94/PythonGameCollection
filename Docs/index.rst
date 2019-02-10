@@ -19,4 +19,5 @@ Menu
 ==================
 
 .. automodule:: Source.menu
+.. autoclass:: Menu
    :members:
