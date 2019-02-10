@@ -1,7 +1,7 @@
 from unittest import TestCase
 from snake import Game
 
-class TestGame(TestCase):
+class TestGameSnake(TestCase):
 
     def test_start_game(self):
 
@@ -13,4 +13,3 @@ class TestGame(TestCase):
 
         game = Game()
         self.assertEqual(game.pause, 0)
-
