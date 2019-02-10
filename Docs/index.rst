@@ -10,14 +10,18 @@ Welcome to PythonGameCollection's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+Overview
+==================
+PythonGameCollection is a small application with three simply games.
+It's a project for Systems and Tools for Software Development.
+The application is written in Python with Pygame library.
+PythonGameCollection contains three games:
+ - Snake
+ - Python-Mind (Mastermind)
+ - Pytris (Te-Tris)
 
 Tutorial
 ==================
 
 Menu
 ==================
-
-.. automodule:: Source.menu
-.. autoclass:: Menu
-   :members:
