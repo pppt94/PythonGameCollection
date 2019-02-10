@@ -20,3 +20,7 @@ Game controls:
  - Snake - use arrow keys, space & enter
  - Python-Mind - use your mouse
  - Pytris - use both keyboard & mouse
+ 
+ # Authors
+ - Pawel Pisarek
+ - Jaroslaw Chudas
