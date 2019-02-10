@@ -22,6 +22,9 @@ PythonGameCollection contains three games:
 
 Tutorial
 ==================
-
-Menu
-==================
+Run Source/menu.py for start PythonGameCollection.
+In main menu use arrow keys to control.
+Game controls:
+ - Snake - use arrow keys, space & enter
+ - Python-Mind - use your mouse
+ - Pytris - use both keyboard & mouse

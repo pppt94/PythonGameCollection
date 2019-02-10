@@ -120,6 +120,13 @@ class Game:
         self.t.print_result(self.level)
 
         while True:
+
+            if self.level >= 9:
+                self.state = 1
+                return None
+            if self.t.result_array == [self.t.black_img] * 4:
+                self.state = 2
+                return None
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.state = 4
@@ -145,13 +152,7 @@ class Game:
                             self.state = 3
                             return None
 
-            if self.level >= 9:
-                self.state = 1
-                return None
-            if self.t.result_array == [self.t.black_img] * 4:
-                self.state = 2
-                return None
-            pygame.display.update()
+            #pygame.display.update()
 
     def game_mode(self):
 
