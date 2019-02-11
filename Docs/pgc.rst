@@ -1,0 +1,5 @@
+.. toctree::
+
+   Snake
+   Pytris
+   PythonMind
