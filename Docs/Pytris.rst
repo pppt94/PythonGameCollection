@@ -1,3 +1,8 @@
 Pytris
 ==========
-Pytris game.
+
+class Block
+----------
+
+class Board
+----------
