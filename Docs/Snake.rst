@@ -21,7 +21,7 @@ Snake
    Change the graphic of the snake's tail.
    :param segment_idx: index of the last segment of snake's body before tail
 
-.. function:: draw snake(self)
+.. function:: draw_snake(self)
 
    Draw all segments of snake's body on the screen.
    
@@ -36,3 +36,4 @@ Snake
 .. function:: check_collision(self)
 
    Check collision between snake's head and the rest of his body.
+   "rtype: Boolean
