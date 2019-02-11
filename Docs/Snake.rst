@@ -36,4 +36,4 @@ Snake
 .. function:: check_collision(self)
 
    Check collision between snake's head and the rest of his body.
-   "rtype: Boolean
+   :rtype: Boolean
