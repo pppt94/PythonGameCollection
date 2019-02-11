@@ -2,4 +2,4 @@
 
    Snake
    Pytris
-   Python Mind
+   PythonMind
